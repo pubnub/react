@@ -15,7 +15,8 @@ export default (config) => {
 
     // list of files / patterns to load in the browser
     files: [
-      './dist/web/pubnub.js'
+      './dist/web/pubnub.js',
+      'test/react/*.test.js',
     ],
 
     // list of files to exclude

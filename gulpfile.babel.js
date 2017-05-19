@@ -7,7 +7,6 @@ const webpackConfig = require('./webpack.config');
 const eslint = require('gulp-eslint');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
-const exec = require('child_process').exec;
 const Karma = require('karma').Server;
 const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
@@ -74,19 +73,25 @@ gulp.task('lint_tests', [], () => {
 
 gulp.task('lint', ['lint_code', 'lint_tests']);
 
+gulp.task('test_client', (done) => {
+  new Karma({ configFile: path.join(__dirname, '/karma.config.js') }, done).start();
+});
+
 gulp.task('test_release', () => {
   return gulp.src('test/release/**/*.test.js', { read: false })
     .pipe(mocha({ reporter: 'spec' }));
 });
 
-gulp.task('test', (done) => {
-  runSequence('pre-test', 'test_node', 'test_web', 'test_titanium', 'test_release', 'validate', done);
+gulp.task('pre-test', () => {
+  return gulp.src(['src/**/*.js'])
+    .pipe(gulpIstanbul({ instrumenter: isparta.Instrumenter, includeAllSources: true }))
+    .pipe(gulpIstanbul.hookRequire());
 });
 
-gulp.task('webpack', (done) => {
-  runSequence('compile_web', 'compile_titanium', done);
+gulp.task('test', (done) => {
+  runSequence('pre-test', 'test_client', 'test_release', 'lint', done);
 });
 
 gulp.task('compile', (done) => {
-  runSequence('clean', 'babel', 'webpack', 'uglify_web', 'uglify_titanium', 'create_version', 'create_version_gzip', done);
+  runSequence('clean', 'babel', 'compile_web', 'uglify_web', 'create_version', 'create_version_gzip', done);
 });
