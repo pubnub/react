@@ -6,6 +6,9 @@
   "scripts": {
     "test": "gulp test"
   },
+  "main": "./lib/react/index.js",
+  "react-native": "./lib/react-native/index.js",
+  "browser": "./dist/web/pubnub.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pubnub/react.git"
