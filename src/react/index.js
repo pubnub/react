@@ -36,8 +36,8 @@ export default class extends PubNubCore {
       });
     }
 
-    this.getMessage = getMessage.bind(this);
     this.getPresence = getPresence.bind(this);
+    this.getMessage = getMessage.bind(this);
     this.getStatus = getStatus.bind(this);
   }
 
