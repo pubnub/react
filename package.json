@@ -31,7 +31,7 @@
   "homepage": "https://github.com/pubnub/react#readme",
   "dependencies": {
     "immutability-helper": "^2.2.0",
-    "pubnub": "^4.8.0"
+    "pubnub": "^4.10.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
