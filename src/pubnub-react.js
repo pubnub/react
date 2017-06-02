@@ -11,6 +11,19 @@ export default class PubNubReact {
   }
 
   /**
+   * Set the react's states to invoke a new render process when a new real time message is received
+   *
+   * @param {component} args
+   */
+  init(component) {
+    if (!component.state) {
+      component.state = { pn_messages: {}, pn_status: {}, pn_presence: {} };
+    } else {
+      component.state = update(component.state, { $merge: { pn_status: {}, pn_messages: [], pn_presence: {} } });
+    }
+  }
+
+  /**
    * Wrap the subscribe method to enable trigger events to the broadcast
    *
    * @param {object} args
