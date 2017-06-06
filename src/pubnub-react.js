@@ -1,6 +1,7 @@
 import PubNub from 'pubnub';
+import update from 'immutability-helper';
 import wrap from './wrapper';
-import { getStatus, getMessage, getPresence } from './triggerEvents';
+import { getStatus, getMessage, getPresence, Trigger } from './triggerEvents';
 
 export default class PubNubReact {
   constructor(config) {
@@ -8,6 +9,7 @@ export default class PubNubReact {
     wrap(instance, this);
 
     this._pubnubInstance = instance;
+    this._component = null;
   }
 
   /**
@@ -19,8 +21,14 @@ export default class PubNubReact {
     if (!component.state) {
       component.state = { pn_messages: {}, pn_status: {}, pn_presence: {} };
     } else {
-      component.state = update(component.state, { $merge: { pn_status: {}, pn_messages: [], pn_presence: {} } });
+      component.state = update(component.state, { $merge: { pn_status: {}, pn_messages: {}, pn_presence: {} } });
     }
+
+    this.getPresence = getPresence.bind(this);
+    this.getMessage = getMessage.bind(this);
+    this.getStatus = getStatus.bind(this);
+
+    this._component = component;
   }
 
   /**
@@ -30,6 +38,7 @@ export default class PubNubReact {
    */
   subscribe(args) {
     this._pubnubInstance.subscribe(args);
+    Trigger.subscribeChannels(args);
   }
 
   /**
@@ -48,6 +57,7 @@ export default class PubNubReact {
    * @param callback
    */
   getMessage(channel, callback) {
+    this.getMessage(channel, callback);
   }
 
   /**
@@ -57,6 +67,7 @@ export default class PubNubReact {
    * @param callback
    */
   getPresence(channel, callback) {
+    this.getPresence(channel, callback);
   }
 
   /**
@@ -65,7 +76,8 @@ export default class PubNubReact {
    * @param {string|[string]} channel
    * @param callback
    */
-  getStatus(channel, callback) {
+  getStatus(callback) {
+    this.getStatus(callback);
   }
 
   /**
