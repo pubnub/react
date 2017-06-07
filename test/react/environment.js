@@ -5,13 +5,17 @@ import { Mock1, Mock2 } from '../mocks';
 
 require('../../react-environment/dom-mock')('<html><body></body></html>');
 
-const mock1 = mount(<Mock1 keys={{subscribeKey: 'demo', publishKey: 'demo-36'}}/>);
-const mock2 = mount(<Mock2 keys={{subscribeKey: 'demo', publishKey: 'demo-36'}}/>);
+const mock1 = mount(<Mock1 keys={ { subscribeKey: 'demo', publishKey: 'demo-36' } }/>);
+const mock2 = mount(<Mock2 keys={ { subscribeKey: 'demo', publishKey: 'demo-36' } }/>);
 
 
 describe('#environment test', () => {
   it('it is to able to make an instance', () => {
-    expect(mock1.pubnub).to.not.be.null;
+    expect(mock1.nodes[0].pubnub).to.not.be.null;
+  });
+
+  it('it is to able to return the origin instance', () => {
+    expect(mock1.nodes[0].pubnub.getOriginalInstance()).to.not.be.null;
   });
 
   it('it is to able to initialize states', () => {
