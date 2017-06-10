@@ -1,7 +1,8 @@
 import PubNub from 'pubnub';
 import update from 'immutability-helper';
 import wrap from './wrapper';
-import { getStatus, getMessage, getPresence, Trigger } from './triggerEvents';
+import { Broadcast } from './broadcast';
+import { getStatus, getMessage, getPresence } from './events';
 
 export default class PubNubReact {
   constructor(config) {
@@ -9,7 +10,6 @@ export default class PubNubReact {
     wrap(instance, this);
 
     this._pubnubInstance = instance;
-    this._component = null;
   }
 
   /**
@@ -24,11 +24,15 @@ export default class PubNubReact {
       component.state = update(component.state, { $merge: { pn_status: {}, pn_messages: {}, pn_presence: {} } });
     }
 
+    this._component = component;
+    this._broadcast = new Broadcast();
+    this._listener = {};
+
+    this.addListener(this._listener);
+
     this.getPresence = getPresence.bind(this);
     this.getMessage = getMessage.bind(this);
     this.getStatus = getStatus.bind(this);
-
-    this._component = component;
   }
 
   /**
@@ -38,7 +42,6 @@ export default class PubNubReact {
    */
   subscribe(args) {
     this._pubnubInstance.subscribe(args);
-    Trigger.subscribeChannels(args);
   }
 
   /**
@@ -48,36 +51,6 @@ export default class PubNubReact {
    */
   unsubscribe(args) {
     this._pubnubInstance.unsubscribe(args);
-  }
-
-  /**
-   * Get to receive messages from a channel or a set of channels through a callback
-   *
-   * @param {string|[string]} channel
-   * @param callback
-   */
-  getMessage(channel, callback) {
-    this.getMessage(channel, callback);
-  }
-
-  /**
-   * Get to receive presence information from a channel or a set of channels through a callback
-   *
-   * @param {string|[string]} channel
-   * @param callback
-   */
-  getPresence(channel, callback) {
-    this.getPresence(channel, callback);
-  }
-
-  /**
-   * Get to receive status information from a channel or a set of channels through a callback
-   *
-   * @param {string|[string]} channel
-   * @param callback
-   */
-  getStatus(callback) {
-    this.getStatus(callback);
   }
 
   /**
