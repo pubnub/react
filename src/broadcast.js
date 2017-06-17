@@ -33,21 +33,31 @@ function unsubscribeChannel(event, channel) {
 
 export class Broadcast {
   constructor() {
-    config.subscribe_listener_events_to_broadcast.forEach((eventName) => {
-      let event = `_${eventName}`;
+    this._message = {};
+    this._presence = {};
+    this._status = null;
 
-      this[event] = {};
+    this.message = function (channel, callback) {
+      subscribeChannel(this._message, channel, callback);
+    };
 
-      /**
-       * Subscribe a channel with its callback to an event
-       *
-       * @param {string} channel
-       * @param {function} callback
-       */
-      this[eventName] = function (channel, callback) {
-        subscribeChannel(this[event], channel, callback);
-      };
-    });
+    this.presence = function (channel, callback) {
+      subscribeChannel(this._presence, channel, callback);
+    };
+
+    this.status = function (callback) {
+      this._status = callback;
+    };
+  }
+
+  isSubscribe(event, channel) {
+    let subscriber = `_${event}`;
+
+    if (subscriber === '_status') {
+      return this[subscriber];
+    } else {
+      return (this[subscriber] && this[subscriber][channel]);
+    }
   }
 
   /**
@@ -62,6 +72,12 @@ export class Broadcast {
 
     if (this[subscriber] && this[subscriber][channel]) {
       this[subscriber][channel].call(null, args);
+    }
+  }
+
+  emitStatus(args) {
+    if (this._status) {
+      this._status.call(null, args);
     }
   }
 
