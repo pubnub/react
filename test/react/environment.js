@@ -1,3 +1,5 @@
+/*eslint no-undef: "describe it"*/
+
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
