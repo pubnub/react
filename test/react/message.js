@@ -19,7 +19,7 @@ describe('#message event', () => {
 
   it('it is to able to receive a message of a channel subscribed', (done) => {
 
-    mock2.node.pubnub.getMessage('channel_2', (msg) => {
+    mock1.node.pubnub.getMessage('channel_2', (msg) => {
       expect(msg).to.be.an('object');
       expect(msg.message).to.be.equal('hello world!');
       done();

@@ -2,7 +2,7 @@ import PubNub from 'pubnub';
 import update from 'immutability-helper';
 import wrap from './wrapper';
 import { Broadcast } from './broadcast';
-import { getStatus, getMessage, getPresence, clean } from './modules';
+import { getStatus, getMessage, getPresence, clean, release } from './modules';
 
 export default class PubNubReact {
   constructor(config) {
@@ -34,6 +34,7 @@ export default class PubNubReact {
     this.getMessage = getMessage.bind(this);
     this.getStatus = getStatus.bind(this);
     this.clean = clean.bind(this);
+    this.release = release.bind(this);
   }
 
   /**

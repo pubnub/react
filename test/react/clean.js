@@ -16,17 +16,18 @@ mock1.node.pubnub.subscribe({ channels: ['channel_22', 'channel_23'], withPresen
 
 let p = new PubNub({ subscribeKey: 'demo', publishKey: 'demo' });
 
-describe('#clean method', () => {
+describe('#clean and release methods', () => {
   it('init the test', (done) => {
-    mock1.node.pubnub.getMessage('channel_22', (msg) => {
+    mock1.node.pubnub.getMessage(['channel_22', 'channel_23'], (msg) => {
       expect(msg.message).to.be.equal('hello world!');
       done();
     });
 
     mock1.node.pubnub.getStatus(() => {
       mock1.node.pubnub.publish({ channel: 'channel_22', message: 'hello world!'});
+      mock1.node.pubnub.publish({ channel: 'channel_23', message: 'hello world!'});
     });
-  }).timeout(2000);
+  }).timeout(2500);
 
   it('validate stack', (done) => {
     expect(mock1.state().pn_messages['channel_22'][0].message).to.be.equal('hello world!');
@@ -42,7 +43,7 @@ describe('#clean method', () => {
 
     p.subscribe({ channels: ['channel_23'], withPresence: true });
 
-  }).timeout(2000);
+  }).timeout(2500);
 
   it('it is able to clean the stack', (done) => {
     mock1.node.pubnub.clean('channel_22');
@@ -50,9 +51,24 @@ describe('#clean method', () => {
     done();
   });
 
+  it('it is able to left stacks untouchable', (done) => {
+    expect(mock1.state().pn_messages['channel_23']).to.have.length(1);
+    done();
+  });
+
   it('it is able to clean the presence', (done) => {
     mock1.node.pubnub.clean(['channel_22', 'channel_23']);
     expect(mock1.state().pn_presence['channel_23']).to.be.empty;
+    done();
+  });
+
+  it('it is able to release the stack', (done) => {
+    mock1.node.pubnub.release('channel_22');
+    done();
+  });
+
+  it('it is able to release a set of channels', (done) => {
+    mock1.node.pubnub.release(['channel_22', 'channel_23']);
     done();
   });
 });
