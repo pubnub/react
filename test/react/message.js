@@ -7,13 +7,13 @@ import { Mock1 } from '../mocks';
 
 require('../../react-environment/dom-mock')('<html><body></body></html>');
 
-const mock2 = mount(<Mock1 keys={ { subscribeKey: 'demo', publishKey: 'demo' } }/>);
+const mock1 = mount(<Mock1 keys={ { subscribeKey: 'demo', publishKey: 'demo' } }/>);
 
-mock2.node.pubnub.init(mock2.node);
+mock1.node.pubnub.init(mock1.node);
 
 describe('#message event', () => {
   it('it is to able to invoke a render if the messages are received', (done) => {
-    expect(mock2.state().pn_messages).to.be.an('object');
+    expect(mock1.state().pn_messages).to.be.an('object');
     done();
   });
 
@@ -25,32 +25,31 @@ describe('#message event', () => {
       done();
     });
 
-    mock2.node.pubnub.getStatus((st) => {
-      mock2.node.pubnub.publish({ channel: 'channel_2', message: 'hello world!'});
+    mock1.node.pubnub.getStatus((st) => {
+      mock1.node.pubnub.publish({ channel: 'channel_2', message: 'hello world!'});
     });
 
-
-    mock2.node.pubnub.subscribe({ channels: ['channel_2'] });
+    mock1.node.pubnub.subscribe({ channels: ['channel_2'] });
 
   }).timeout(2000);
 
   it('it is to able to support multi channels at the same time', (done) => {
-    mock2.node.pubnub.getMessage(['channel_3', 'channel_4'], (msg) => {
+    mock1.node.pubnub.getMessage(['channel_3', 'channel_4'], (msg) => {
       expect(msg).to.be.an('object');
       expect(msg.message).to.be.equal('hello world!');
       done();
     });
 
-    mock2.node.pubnub.getStatus(() => {
-      mock2.node.pubnub.publish({ channel: 'channel_3', message: 'hello world!'});
+    mock1.node.pubnub.getStatus(() => {
+      mock1.node.pubnub.publish({ channel: 'channel_3', message: 'hello world!'});
     });
 
 
-    mock2.node.pubnub.subscribe({ channels: ['channel_3', 'channel_4'] });
+    mock1.node.pubnub.subscribe({ channels: ['channel_3', 'channel_4'] });
   }).timeout(2000);
 
   it('it is to able to update the state: pn_message', (done) => {
-    expect(mock2.state().pn_messages.channel_2[0].message).to.be.equal('hello world!');
+    expect(mock1.state().pn_messages.channel_2[0].message).to.be.equal('hello world!');
     done();
   });
 });

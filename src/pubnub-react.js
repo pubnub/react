@@ -2,7 +2,7 @@ import PubNub from 'pubnub';
 import update from 'immutability-helper';
 import wrap from './wrapper';
 import { Broadcast } from './broadcast';
-import { getStatus, getMessage, getPresence } from './events';
+import { getStatus, getMessage, getPresence, clean } from './modules';
 
 export default class PubNubReact {
   constructor(config) {
@@ -33,6 +33,7 @@ export default class PubNubReact {
     this.getPresence = getPresence.bind(this);
     this.getMessage = getMessage.bind(this);
     this.getStatus = getStatus.bind(this);
+    this.clean = clean.bind(this);
   }
 
   /**
@@ -51,14 +52,6 @@ export default class PubNubReact {
    */
   unsubscribe(args) {
     this._pubnubInstance.unsubscribe(args);
-  }
-
-  /**
-   * Clean the stack of messages for a channel or a set of channels
-   *
-   * @param {string|[string]} channel
-   */
-  clean(channel) {
   }
 
   /**
