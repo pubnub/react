@@ -4,11 +4,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Mock1, Mock2 } from '../mocks';
+import { config } from '../testHelper';
 
 require('../../react-environment/dom-mock')('<html><body></body></html>');
 
-const mock1 = mount(<Mock1 keys={ { subscribeKey: 'demo', publishKey: 'demo-36' } }/>);
-const mock2 = mount(<Mock2 keys={ { subscribeKey: 'demo', publishKey: 'demo-36' } }/>);
+const mock1 = mount(<Mock1 keys={ config.demo }/>);
+const mock2 = mount(<Mock2 keys={ config.demo }/>);
 
 
 describe('#environment test', () => {

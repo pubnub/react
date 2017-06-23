@@ -4,10 +4,13 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Mock2 } from '../mocks';
+import { config, getRandomChannel } from '../testHelper';
 
 require('../../react-environment/dom-mock')('<html><body></body></html>');
 
-const mock2 = mount(<Mock2 keys={ { subscribeKey: 'demo', publishKey: 'demo' } }/>);
+const mock2 = mount(<Mock2 keys={ config.demo }/>);
+
+const channelA = getRandomChannel();
 
 mock2.node.pubnub.init(mock2.node);
 
@@ -23,7 +26,7 @@ describe('#status event', () => {
       done();
     });
 
-    mock2.node.pubnub.subscribe({ channels: ['channel_1'] });
+    mock2.node.pubnub.subscribe({ channels: [channelA] });
   }).timeout(2000);
 
   it('it is to able to update the state: pn_status', (done) => {

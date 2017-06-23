@@ -5,70 +5,78 @@ import PubNub from 'pubnub';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Mock1 } from '../mocks';
+import { config, getRandomChannel } from '../testHelper';
 
 require('../../react-environment/dom-mock')('<html><body></body></html>');
 
-const mock1 = mount(<Mock1 keys={ { subscribeKey: 'demo', publishKey: 'demo' } }/>);
+const mock1 = mount(<Mock1 keys={ config.demo }/>);
+
+const channelA = getRandomChannel();
+const channelB = getRandomChannel();
 
 mock1.node.pubnub.init(mock1.node);
 
-mock1.node.pubnub.subscribe({ channels: ['channel_22', 'channel_23'], withPresence: true });
+mock1.node.pubnub.subscribe({ channels: [channelA, channelB], withPresence: true });
 
-let p = new PubNub({ subscribeKey: 'demo', publishKey: 'demo' });
+let p = new PubNub(config.demo);
 
 describe('#clean and release methods', () => {
   it('init the test', (done) => {
-    mock1.node.pubnub.getMessage(['channel_22', 'channel_23'], (msg) => {
+    mock1.node.pubnub.getMessage(channelA, (msg) => {
       expect(msg.message).to.be.equal('hello world!');
       done();
     });
 
+    mock1.node.pubnub.getMessage([channelB], (msg) => {
+      expect(msg.message).to.be.equal('hello world!');
+    });
+
     mock1.node.pubnub.getStatus(() => {
-      mock1.node.pubnub.publish({ channel: 'channel_22', message: 'hello world!'});
-      mock1.node.pubnub.publish({ channel: 'channel_23', message: 'hello world!'});
+      mock1.node.pubnub.publish({ channel: channelA, message: 'hello world!'});
+      mock1.node.pubnub.publish({ channel: channelB, message: 'hello world!'});
     });
   }).timeout(2500);
 
   it('validate stack', (done) => {
-    expect(mock1.state().pn_messages['channel_22'][0].message).to.be.equal('hello world!');
+    expect(mock1.state().pn_messages[channelA][0].message).to.be.equal('hello world!');
     done();
   });
 
   it('validate presence', (done) => {
-    mock1.node.pubnub.getPresence('channel_23', (ps) => {
+    mock1.node.pubnub.getPresence(channelB, (ps) => {
       expect(ps.action).to.be.equal('join');
-      expect(ps.channel).to.be.equal('channel_23');
+      expect(ps.channel).to.be.equal(channelB);
       done();
     });
 
-    p.subscribe({ channels: ['channel_23'], withPresence: true });
+    p.subscribe({ channels: [channelB], withPresence: true });
 
   }).timeout(2500);
 
   it('it is able to clean the stack', (done) => {
-    mock1.node.pubnub.clean('channel_22');
-    expect(mock1.state().pn_messages['channel_22']).to.have.length(0);
+    mock1.node.pubnub.clean(channelA);
+    expect(mock1.state().pn_messages[channelA]).to.have.length(0);
     done();
   });
 
   it('it is able to left stacks untouchable', (done) => {
-    expect(mock1.state().pn_messages['channel_23']).to.have.length(1);
+    expect(mock1.state().pn_messages[channelB]).to.have.length(1);
     done();
   });
 
   it('it is able to clean the presence', (done) => {
-    mock1.node.pubnub.clean(['channel_22', 'channel_23']);
-    expect(mock1.state().pn_presence['channel_23']).to.be.empty;
+    mock1.node.pubnub.clean([channelA, channelB]);
+    expect(mock1.state().pn_presence[channelB]).to.be.empty;
     done();
   });
 
   it('it is able to release the stack', (done) => {
-    mock1.node.pubnub.release('channel_22');
+    mock1.node.pubnub.release(channelA);
     done();
   });
 
   it('it is able to release a set of channels', (done) => {
-    mock1.node.pubnub.release(['channel_22', 'channel_23']);
+    mock1.node.pubnub.release([channelA, channelB]);
     done();
   });
 });
