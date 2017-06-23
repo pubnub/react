@@ -3,13 +3,13 @@ import update from 'immutability-helper';
 function cleanStates(instance, channel) {
   if (instance._broadcast.isSubscribe('message', channel)) {
     instance._component.setState(prevState => ({
-      pn_messages: update(prevState.pn_messages, { $set: { [channel]: [] } })
+      pn_messages: update(prevState.pn_messages, { [channel]: { $set: [] } })
     }));
   }
 
   if (instance._broadcast.isSubscribe('presence', channel)) {
     instance._component.setState(prevState => ({
-      pn_presence: update(prevState.pn_presence, { $set: { [channel]: {} } })
+      pn_presence: update(prevState.pn_presence, { [channel]: { $set: [] } })
     }));
   }
 }
