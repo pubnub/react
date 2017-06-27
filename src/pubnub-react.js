@@ -1,6 +1,7 @@
 import PubNub from 'pubnub';
 import update from 'immutability-helper';
 import wrap from './wrapper';
+import Autoload from './autoload';
 import { Broadcast } from './broadcast';
 import { getStatus, getMessage, getPresence, clean, release } from './modules';
 
@@ -10,6 +11,7 @@ export default class PubNubReact {
     wrap(instance, this);
 
     this._pubnubInstance = instance;
+    this._autoload = new Autoload();
   }
 
   /**
@@ -29,6 +31,7 @@ export default class PubNubReact {
     this._listener = {};
 
     this.addListener(this._listener);
+    this._autoload.initialize(this);
 
     this.getPresence = getPresence.bind(this);
     this.getMessage = getMessage.bind(this);
@@ -44,6 +47,7 @@ export default class PubNubReact {
    */
   subscribe(args) {
     this._pubnubInstance.subscribe(args);
+    this._autoload.enableLoad(args);
   }
 
   /**
@@ -53,6 +57,7 @@ export default class PubNubReact {
    */
   unsubscribe(args) {
     this._pubnubInstance.unsubscribe(args);
+    this._autoload.disableLoad(args);
   }
 
   /**
