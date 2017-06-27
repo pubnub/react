@@ -36,18 +36,18 @@ export class Broadcast {
     this._message = {};
     this._presence = {};
     this._status = null;
+  }
 
-    this.message = function (channel, callback) {
-      subscribeChannel(this._message, channel, callback);
-    };
+  message(channel, callback) {
+    subscribeChannel(this._message, channel, callback);
+  }
 
-    this.presence = function (channel, callback) {
-      subscribeChannel(this._presence, channel, callback);
-    };
+  presence(channel, callback) {
+    subscribeChannel(this._presence, channel, callback);
+  }
 
-    this.status = function (callback) {
-      this._status = callback;
-    };
+  status(callback) {
+    this._status = callback;
   }
 
   isSubscribe(event, channel) {
