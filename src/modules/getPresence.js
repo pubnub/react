@@ -1,18 +1,24 @@
 import update from 'immutability-helper';
 
+function setState(instance, channel) {
+  if (instance._component.state.pn_presence[channel]) {
+    return true;
+  }
+
+  instance._component.setState(prevState => ({
+    pn_presence: update(prevState.pn_presence, { $merge: { [channel]: {} } })
+  }));
+}
+
 export function getPresence(channel, callback) {
   this._broadcast.presence(channel, callback);
 
   if (Array.isArray(channel)) {
     channel.forEach((ch) => {
-      this._component.setState(prevState => ({
-        pn_presence: update(prevState.pn_presence, { $merge: { [ch]: {} } })
-      }));
+      setState(this, ch);
     });
   } else {
-    this._component.setState(prevState => ({
-      pn_presence: update(prevState.pn_presence, { $merge: { [channel]: {} } })
-    }));
+    setState(this, channel);
   }
 
   if (!this._listener.presence) {

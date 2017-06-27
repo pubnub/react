@@ -1,20 +1,18 @@
-import update from 'immutability-helper';
-
 function releaseStates(instance, channel) {
   if (instance._broadcast.isSubscribe('message', channel)) {
-    let pn_messages = instance._component.state.pn_messages;
+    let pnMessages = instance._component.state.pn_messages;
 
-    delete pn_messages[channel];
+    delete pnMessages[channel];
 
-    instance._component.setState({ pn_messages });
+    instance._component.setState({ pn_messages: pnMessages });
   }
 
   if (instance._broadcast.isSubscribe('presence', channel)) {
-    let pn_presence = instance._component.state.pn_presence;
+    let pnPresence = instance._component.state.pn_presence;
 
-    delete pn_presence[channel];
+    delete pnPresence[channel];
 
-    instance._component.setState({ pn_presence });
+    instance._component.setState({ pn_presence: pnPresence });
   }
 
   instance._broadcast.unsubscribe(channel);
