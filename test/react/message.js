@@ -11,8 +11,6 @@ require('../../react-environment/dom-mock')('<html><body></body></html>');
 const mock1 = mount(<Mock1 keys={ config.demo }/>);
 
 const channelA = getRandomChannel();
-const channelB = getRandomChannel();
-const channelC = getRandomChannel();
 
 mock1.node.pubnub.init(mock1.node);
 
@@ -30,7 +28,7 @@ describe('#message event', () => {
       done();
     });
 
-    mock1.node.pubnub.getStatus((st) => {
+    mock1.node.pubnub.getStatus(() => {
       mock1.node.pubnub.publish({ channel: channelA, message: 'hello world!'});
     });
 
@@ -38,20 +36,11 @@ describe('#message event', () => {
 
   }).timeout(2000);
 
-  it('it is to able to support multi channels at the same time', (done) => {
-    mock1.node.pubnub.getMessage([channelB, channelC], (msg) => {
-      expect(msg).to.be.an('object');
-      expect(msg.message).to.be.equal('hello world!');
-      done();
-    });
-
-    mock1.node.pubnub.getStatus(() => {
-      mock1.node.pubnub.publish({ channel: channelB, message: 'hello world!'});
-    });
-
-
-    mock1.node.pubnub.subscribe({ channels: [channelB, channelC] });
-  }).timeout(2000);
+  it('it is to able to retrieve the stack of message received', (done) => {
+    let stack = mock1.node.pubnub.getMessage(channelA);
+    expect(stack).length.to.have.length(1);
+    done();
+  });
 
   it('it is to able to update the state: pn_message', (done) => {
     expect(mock1.state().pn_messages[channelA][0].message).to.be.equal('hello world!');

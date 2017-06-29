@@ -27,10 +27,16 @@ describe('#autload', () => {
     });
   });
 
-  it('Should be to recovery history messages from a channel', function (done){
+  it('Should be to recovery history messages from a channel', (done) => {
     mock1.node.pubnub.getMessage(config.channelWithHistory, () => {
       expect(mock1.state().pn_messages[config.channelWithHistory]).to.have.length(100);
       done();
     });
+  }).timeout(2000);
+
+  it('it is to able to retrieve the stack of message received', (done) => {
+    let stack = mock1.node.pubnub.getMessage(config.channelWithHistory);
+    expect(stack).length.to.have.length(100);
+    done();
   });
 });

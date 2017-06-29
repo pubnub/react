@@ -26,9 +26,6 @@ export default class {
 
       args.channels.forEach((channel) => {
         this.count[channel] = args.autoload;
-        this.instance._component.setState(prevState => ({
-          pn_messages: update(prevState.pn_messages, { $merge: { [channel]: [] } })
-        }));
       });
     }
   }
@@ -41,28 +38,20 @@ export default class {
    */
   getHistory(channel, callback) {
     if (this.count[channel]) {
-      let instance = this.instance;
-      let _channels = Array.isArray(channel) ? channel : [channel];
-      let times = _channels.length;
+      this.instance.history({ channel: channel, count: this.count[channel] }).then((response) => {
+        response.messages.forEach((m) => {
+          m.message = m.entry;
+          m.channel = channel;
 
-      _channels.forEach((ch) => {
-        instance.history({ channel: ch, count: this.count[channel] }).then((response) => {
-          response.messages.forEach((m) => {
-            m.message = m.entry;
-            m.channel = ch;
+          this.instance._component.setState(prevState => ({
+            pn_messages: update(prevState.pn_messages, { [channel]: { $push: [m] } })
+          }));
+        });
 
-            this.instance._component.setState(prevState => ({
-              pn_messages: update(prevState.pn_messages, { [ch]: { $push: [m] } })
-            }));
-          });
-
-          times -= 1;
-
-          if (callback && times === 0) {
-            callback();
-          }
-        }).catch(() => {});
-      });
+        if (callback) {
+          callback();
+        }
+      }).catch(() => {});
     }
   }
 

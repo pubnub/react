@@ -13,11 +13,10 @@ const mock2 = mount(<Mock2 keys={ config.demo }/>);
 
 const channelA = getRandomChannel();
 const channelB = getRandomChannel();
-const channelC = getRandomChannel();
 
 mock2.node.pubnub.init(mock2.node);
 
-mock2.node.pubnub.subscribe({ channels: [channelA, channelB, channelC], withPresence: true });
+mock2.node.pubnub.subscribe({ channels: [channelA, channelB], withPresence: true });
 
 let p = new PubNub(config.demo);
 
@@ -38,14 +37,11 @@ describe('#presence event', () => {
 
   }).timeout(2000);
 
-  it('it is to able to support multi channels at the same time', (done) => {
+  it('it is to able to retrieve the presence from state', (done) => {
 
-    mock2.node.pubnub.getPresence([channelB, channelC], (ps) => {
-      expect(ps.action).to.be.equal('join');
-      expect(ps.channel).to.be.equal(channelB);
-      done();
-    });
-
-    p.subscribe({channels: [channelB], withPresence: true});
+    let ps = mock2.node.pubnub.getPresence(channelA)
+    expect(ps.action).to.be.equal('join');
+    expect(ps.channel).to.be.equal(channelA);
+    done();
   }).timeout(2000);
 });

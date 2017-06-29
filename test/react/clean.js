@@ -27,7 +27,7 @@ describe('#clean and release methods', () => {
       done();
     });
 
-    mock1.node.pubnub.getMessage([channelB], (msg) => {
+    mock1.node.pubnub.getMessage(channelB, (msg) => {
       expect(msg.message).to.be.equal('hello world!');
     });
 
@@ -65,18 +65,14 @@ describe('#clean and release methods', () => {
   });
 
   it('it is able to clean the presence', (done) => {
-    mock1.node.pubnub.clean([channelA, channelB]);
+    mock1.node.pubnub.clean(channelB);
     expect(mock1.state().pn_presence[channelB]).to.be.empty;
     done();
   });
 
   it('it is able to release the stack', (done) => {
-    mock1.node.pubnub.release(channelA);
-    done();
-  });
-
-  it('it is able to release a set of channels', (done) => {
-    mock1.node.pubnub.release([channelA, channelB]);
+    mock1.node.pubnub.release(channelB);
+    expect(mock1.state().pn_messages[channelB]).to.be.equal(undefined);
     done();
   });
 });
