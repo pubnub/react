@@ -7,7 +7,7 @@ import config from '../config.json';
  * @param {string|[string]} channel
  * @param {function} callback to execute.
  */
-function subscribeChannel(event, channel, callback) {
+function subscribeChannel(event, channel, callback = () => {}) {
   if (Array.isArray(channel)) {
     channel.forEach((ch) => {
       event[ch] = callback;
