@@ -3,13 +3,21 @@ import update from 'immutability-helper';
 function init(instance, channel) {
   if (instance._component.state.pn_messages[channel]) {
     return false;
-  }
+  } else {
+    instance._component.setState(prevState => ({
+      pn_messages: update(prevState.pn_messages, { $merge: { [channel]: [] } })
+    }));
 
+    return true;
+  }
+}
+
+function emit(instance, channel, message) {
   instance._component.setState(prevState => ({
-    pn_messages: update(prevState.pn_messages, { $merge: { [channel]: [] } })
+    pn_messages: update(prevState.pn_messages, { [channel]: { $push: [message] } })
   }));
 
-  return true;
+  instance._broadcast.emit('message', channel, message);
 }
 
 export function getMessage(channel, callback) {
@@ -20,16 +28,14 @@ export function getMessage(channel, callback) {
   }
 
   if (!this._listener.message) {
-    this._listener.message = (received) => {
-      if (!this._broadcast.isSubscribe('message', received.channel)) {
-        return true;
+    this._listener.message = (message) => {
+      if (message.subscription && this._broadcast.isSubscribe('message', message.subscription)) {
+        emit(this, message.subscription, message);
       }
 
-      this._component.setState(prevState => ({
-        pn_messages: update(prevState.pn_messages, { [received.channel]: { $push: [received] } })
-      }));
-
-      this._broadcast.emit('message', received.channel, received);
+      if (message.channel && this._broadcast.isSubscribe('message', message.channel)) {
+        emit(this, message.channel, message);
+      }
     };
   }
 
