@@ -6,11 +6,7 @@ import config from '../config.json';
  * @param {string} attributeName
  */
 function wrapAttribute(originalInstance, wrappedInstance, attributeName) {
-  Object.defineProperty(wrappedInstance, attributeName, {
-    get: function () {
-      return originalInstance[attributeName];
-    }
-  });
+  wrappedInstance[attributeName] = originalInstance[attributeName];
 }
 
 /**
