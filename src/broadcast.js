@@ -7,12 +7,10 @@ import config from '../config.json';
  * @param {string|[string]} channel
  * @param {function} callback to execute.
  */
-function subscribeChannel(event, channel, callback = () => {}) {
-  if (Array.isArray(channel)) {
-    channel.forEach((ch) => {
-      event[ch] = callback;
-    });
-  } else {
+function subscribeChannel(event, channel, callback) {
+  if (!event[channel]) {
+    event[channel] = callback || {};
+  } else if (event[channel] === {} && callback) {
     event[channel] = callback;
   }
 }
@@ -24,11 +22,9 @@ function subscribeChannel(event, channel, callback = () => {}) {
  * @param {string|[string]} channel
  */
 function unsubscribeChannel(event, channel) {
-  if (Array.isArray(channel)) {
-    channel.forEach((ch) => {
-      if (event[ch]) delete event[ch];
-    });
-  } else if (event[channel]) delete event[channel];
+  if (event[channel]) {
+    delete event[channel];
+  }
 }
 
 export class Broadcast {
@@ -64,7 +60,11 @@ export class Broadcast {
    * @param callback
    */
   status(callback) {
-    this._status = callback;
+    if (!this._status) {
+      this._status = callback || {};
+    } else if (this._status === {} && callback) {
+      this._status = callback;
+    }
   }
 
   /**
@@ -94,7 +94,7 @@ export class Broadcast {
   emit(event, channel, args) {
     let subscriber = `_${event}`;
 
-    if (this[subscriber] && this[subscriber][channel]) {
+    if (this[subscriber] && this[subscriber][channel] && typeof this[subscriber][channel] === 'function') {
       this[subscriber][channel].call(null, args);
     }
   }
@@ -105,7 +105,7 @@ export class Broadcast {
    * @param {object} args
    */
   emitStatus(args) {
-    if (this._status) {
+    if (this._status && typeof this._status === 'function') {
       this._status.call(null, args);
     }
   }

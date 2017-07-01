@@ -7,11 +7,11 @@ import update from 'immutability-helper';
  * @param {string} channel
  * @returns {boolean}
  */
-function init(instance, channel) {
-  if (instance._component.state.pn_messages[channel]) {
+function init(component, channel) {
+  if (component.state.pn_messages[channel]) {
     return false;
   } else {
-    instance._component.setState(prevState => ({
+    component.setState(prevState => ({
       pn_messages: update(prevState.pn_messages, { $merge: { [channel]: [] } })
     }));
 
@@ -42,11 +42,13 @@ function emit(instance, channel, message) {
  * @returns {[]}
  */
 export function getMessage(channel, callback) {
-  this._broadcast.message(channel, callback);
+  let component = this._component;
 
-  if (init(this, channel)) {
+  if (init(component, channel)) {
     this._autoload.getHistory(channel, callback);
   }
+
+  this._broadcast.message(channel, callback);
 
   if (!this._listener.message) {
     this._listener.message = (message) => {
@@ -60,8 +62,8 @@ export function getMessage(channel, callback) {
     };
   }
 
-  if (this._component.state && this._component.state.pn_messages) {
-    return this._component.state.pn_messages[channel];
+  if (component.state && component.state.pn_messages && component.state.pn_messages[channel]) {
+    return component.state.pn_messages[channel];
   } else {
     return [];
   }
