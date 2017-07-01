@@ -16,4 +16,10 @@ export function getStatus(callback) {
       this._broadcast.emitStatus(st);
     };
   }
+
+  if (this._component.state && this._component.state.pn_status) {
+    return this._component.state.pn_status;
+  } else {
+    return {};
+  }
 }

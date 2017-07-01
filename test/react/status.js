@@ -33,4 +33,9 @@ describe('#status event', () => {
     expect(mock2.state().pn_status.category).to.be.equal('PNConnectedCategory');
     done();
   });
+
+  it('it is to able to retrieve from getStatus', (done) => {
+    expect(mock2.node.pubnub.getStatus()).to.be.an('object');
+    done();
+  });
 });
