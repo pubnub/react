@@ -1,5 +1,12 @@
 import update from 'immutability-helper';
 
+/**
+ * Add a channel to the state pn_presence
+ *
+ * @param {PubNubReact} instance
+ * @param {string} channel
+ * @returns {boolean}
+ */
 function init(instance, channel) {
   if (instance._component.state.pn_presence[channel]) {
     return false;
@@ -12,14 +19,29 @@ function init(instance, channel) {
   return true;
 }
 
-function emit(instance, channel, ps) {
+/**
+ * Emit a presence information through a callback and update the state
+ *
+ * @param {PubNubReact} instance
+ * @param {string} channel
+ * @param {object} presence
+ */
+function emit(instance, channel, presence) {
   instance._component.setState(prevState => ({
-    pn_presence: update(prevState.pn_presence, { [channel]: { $set: ps } })
+    pn_presence: update(prevState.pn_presence, { [channel]: { $set: presence } })
   }));
 
-  instance._broadcast.emit('presence', ps.channel, ps);
+  instance._broadcast.emit('presence', presence.channel, presence);
 }
 
+
+/**
+ * Get to receive presence information from a channel through a callback
+ *
+ * @param {string} channel
+ * @param {function} callback
+ * @returns {object}
+ */
 export function getPresence(channel, callback) {
   this._broadcast.presence(channel, callback);
 

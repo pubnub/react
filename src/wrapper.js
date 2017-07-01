@@ -20,6 +20,12 @@ function wrapMethod(OriginalInstance, wrappedInstance, methodName) {
   };
 }
 
+/**
+ * Wrap the PubNubReact with PubNub
+ *
+ * @param originalInstance
+ * @param wrappedInstance
+ */
 export default function (originalInstance, wrappedInstance) {
   config.attributes_to_delegate.forEach((attribute) => {
     wrapAttribute(originalInstance, wrappedInstance, attribute);

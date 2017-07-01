@@ -38,18 +38,42 @@ export class Broadcast {
     this._status = null;
   }
 
+  /**
+   * Subscribe a callback to a channel through the message event
+   *
+   * @param {string} channel
+   * @param {function} callback
+   */
   message(channel, callback) {
     subscribeChannel(this._message, channel, callback);
   }
 
+  /**
+   * Subscribe a callback to a channel through the presence event
+   *
+   * @param {string} channel
+   * @param {function} callback
+   */
   presence(channel, callback) {
     subscribeChannel(this._presence, channel, callback);
   }
 
+  /**
+   * Subscribe a callback through the status event
+   *
+   * @param callback
+   */
   status(callback) {
     this._status = callback;
   }
 
+  /**
+   * Validate if a channel is subscribe to an event
+   *
+   * @param {string} event
+   * @param {string} channel
+   * @returns {boolean}
+   */
   isSubscribe(event, channel) {
     let subscriber = `_${event}`;
 
@@ -63,7 +87,7 @@ export class Broadcast {
   /**
    * Emit a message to a channel through an event
    *
-   * @param {string} event - (message, presence, status)
+   * @param {string} event - (message, presence)
    * @param {string} channel
    * @param {object} args
    */
@@ -75,6 +99,11 @@ export class Broadcast {
     }
   }
 
+  /**
+   * Emit the status event through the callback subscribed
+   *
+   * @param {object} args
+   */
   emitStatus(args) {
     if (this._status) {
       this._status.call(null, args);

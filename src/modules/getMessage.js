@@ -1,5 +1,12 @@
 import update from 'immutability-helper';
 
+/**
+ * Add a channel to the state pn_messages
+ *
+ * @param {PubNubReact} instance
+ * @param {string} channel
+ * @returns {boolean}
+ */
 function init(instance, channel) {
   if (instance._component.state.pn_messages[channel]) {
     return false;
@@ -12,6 +19,13 @@ function init(instance, channel) {
   }
 }
 
+/**
+ * Emit a message through a callback and update the state
+ *
+ * @param {PubNubReact} instance
+ * @param {string} channel
+ * @param {object} message
+ */
 function emit(instance, channel, message) {
   instance._component.setState(prevState => ({
     pn_messages: update(prevState.pn_messages, { [channel]: { $push: [message] } })
@@ -20,6 +34,13 @@ function emit(instance, channel, message) {
   instance._broadcast.emit('message', channel, message);
 }
 
+/**
+ * Get to receive messages from a channel through a callback
+ *
+ * @param {string} channel
+ * @param {function} callback
+ * @returns {[]}
+ */
 export function getMessage(channel, callback) {
   this._broadcast.message(channel, callback);
 

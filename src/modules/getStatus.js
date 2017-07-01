@@ -1,5 +1,11 @@
 import update from 'immutability-helper';
 
+/**
+ * Get to receive status information from a channel through a callback
+ *
+ * @param {function} callback
+ * @returns {object}
+ */
 export function getStatus(callback) {
   this._broadcast.status(callback);
 
