@@ -7,7 +7,6 @@
     "test": "gulp test"
   },
   "main": "./lib/pubnub-react.js",
-  "react-native": "./lib/pubnub-react.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pubnub/react.git"
