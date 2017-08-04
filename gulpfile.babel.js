@@ -1,16 +1,18 @@
+/* eslint no-console: 0, arrow-body-style: 0 */
+
 const gulp = require('gulp');
-const path = require('path');
 const babel = require('gulp-babel');
 const clean = require('gulp-clean');
 const eslint = require('gulp-eslint');
-const rename = require('gulp-rename');
 const mocha = require('gulp-mocha');
-const plug = require('gulp-load-plugins')({ lazy: true });
 const runSequence = require('run-sequence');
 const gulpIstanbul = require('gulp-istanbul');
 const isparta = require('isparta');
 const sourcemaps = require('gulp-sourcemaps');
-const packageJSON = require('./package.json');
+const gulpWebpack = require('webpack-stream');
+const webpackConfig = require('./webpack.config');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
 gulp.task('clean', () => {
   return gulp.src(['lib', 'dist', 'coverage', 'upload'], { read: false })
@@ -23,18 +25,6 @@ gulp.task('babel', () => {
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('lib'));
-});
-
-gulp.task('create_version', () => {
-  return gulp.src('dist/web/pubnub.js')
-    .pipe(rename(`pubnub.${packageJSON.version}.js`))
-    .pipe(gulp.dest('upload/normal'));
-});
-
-gulp.task('create_version_gzip', () => {
-  return gulp.src('upload/normal/*.js')
-    .pipe(gzip({ append: false }))
-    .pipe(gulp.dest('upload/gzip'));
 });
 
 gulp.task('lint_code', [], () => {
@@ -53,18 +43,17 @@ gulp.task('lint_tests', [], () => {
 
 gulp.task('lint', ['lint_code', 'lint_tests']);
 
-gulp.task('test_client', function () {
-  return gulp.src('./test/**/*.js', { read: false })
-    .pipe(plug.mocha({
-      compilers: {
-        js: babel
-      }
-    }));
+gulp.task('test_client', () => {
+  return gulp.src(['test/react/*.js'], { read: false })
+    .pipe(mocha({ reporter: 'spec' }))
+    .pipe(gulpIstanbul.writeReports({ reporters: ['json', 'lcov', 'text'] }));
 });
 
-gulp.task('test_release', () => {
-  return gulp.src('test/release/**/*.test.js', { read: false })
-    .pipe(mocha({ reporter: 'spec' }));
+
+gulp.task('compile_web', () => {
+  return gulp.src('src/pubnub-react.js')
+    .pipe(gulpWebpack(webpackConfig))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('pre-test', () => {
@@ -73,10 +62,18 @@ gulp.task('pre-test', () => {
     .pipe(gulpIstanbul.hookRequire());
 });
 
+gulp.task('uglify_web', () => {
+  return gulp.src('dist/pubnub-react.js')
+    .pipe(uglify({ mangle: true, compress: true }))
+
+    .pipe(rename('pubnub-react.min.js'))
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('test', (done) => {
-  runSequence('pre-test', 'test_client', 'test_release', 'lint', done);
+  runSequence('pre-test', 'test_client', 'lint', done);
 });
 
 gulp.task('compile', (done) => {
-  runSequence('clean', 'babel', 'compile_web', 'uglify_web', 'create_version', 'create_version_gzip', done);
+  runSequence('clean', 'babel', 'compile_web', 'uglify_web', done);
 });
