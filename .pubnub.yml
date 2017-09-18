@@ -2,6 +2,9 @@ name: pubnub-react
 version: 1.0.1
 schema: 1
 scm: github.com/pubnub/pubnub-react
+files:
+  - dist/pubnub-react.js
+  - dist/pubnub-react.min.js
 changelog:
   - version: v1.0.1
     changes:
@@ -13,3 +16,4 @@ changelog:
       - type: feature
         text: first public version
     date: 2017-08-02
+
