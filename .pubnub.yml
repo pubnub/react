@@ -1,2 +1,23 @@
 name: pubnub-react
-version: 1.0.1
+version: 1.0.2
+schema: 1
+scm: github.com/pubnub/pubnub-react
+files:
+  - dist/pubnub-react.js
+  - dist/pubnub-react.min.js
+changelog:
+  - version: v1.0.2
+    changes:
+      - type: feature
+        text: add npmignore
+    date: 2017-09-18
+  - version: v1.0.1
+    changes:
+      - type: feature
+        text: add webpack
+    date: 2017-08-04
+  - version: v1.0.0
+    changes:
+      - type: feature
+        text: first public version
+    date: 2017-08-02
