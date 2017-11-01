@@ -11,6 +11,7 @@ require('../../react-environment/dom-mock')('<html><body></body></html>');
 const mock1 = mount(<Mock1 keys={ config.demo }/>);
 
 const channelA = getRandomChannel();
+const channelB = getRandomChannel();
 
 mock1.node.pubnub.init(mock1.node);
 
@@ -32,7 +33,7 @@ describe('#message event', () => {
       mock1.node.pubnub.publish({ channel: channelA, message: 'hello world!'});
     });
 
-    mock1.node.pubnub.subscribe({ channels: [channelA] });
+    mock1.node.pubnub.subscribe({ channels: [channelA, channelB] });
 
   }).timeout(2000);
 
@@ -46,4 +47,19 @@ describe('#message event', () => {
     expect(mock1.state().pn_messages[channelA][0].message).to.be.equal('hello world!');
     done();
   });
+
+  it('it is to able to trim the stack of messages', (done) => {
+    let counter = 0;
+    mock1.node.pubnub.getMessage(channelB, () => {
+      counter += 1;
+      if (counter === 4) {
+        expect(mock1.node.pubnub.getMessage(channelB)).length.to.have.length(3);
+        done();
+      }
+    }, 3);
+
+    for (let i = 1; i <= 4; i++) {
+      mock1.node.pubnub.publish({ channel: channelB, message: `message-${i}`});
+    }
+  }).timeout(5000);
 });
