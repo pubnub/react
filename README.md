@@ -196,6 +196,42 @@ componentWillMount() {
 ...
 ```
 
+When you are using `getMessage` this is going to keep the latest 100 messages received by default. But you can change this
+value when you attach the channel for first time with `getMesage`.
+
+```
+...
+
+// the stack for the channel1 will always have the latest 20 messages.
+componentWillMount() {
+  this.pubnub.init(this);
+  
+  this.pubnub.getMessage('channel1', (msg) => {
+    console.log(msg);
+  }, 20);
+  
+  ...
+}
+
+...
+```
+or
+
+```
+...
+
+// the stack for the channel1 will always have the latest 20 messages.
+componentWillMount() {
+  this.pubnub.init(this);
+  
+  this.pubnub.getMessage('channel1', 20);
+  
+  ...
+}
+
+...
+```
+
 ### getPresence
 
 **Rendering presence object from react**

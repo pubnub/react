@@ -29,6 +29,7 @@ export default class PubNubReact {
     this._component = component;
     this._broadcast = new Broadcast();
     this._listener = {};
+    this._keepMessages = {};
 
     this.addListener(this._listener);
     this._autoload.initialize(this);

@@ -1,3 +1,13 @@
+[Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.2...v1.1.0)
+
+
+
+
+- 🌟keep the stack of messages with only the latest 100
+
+
+
+
 [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.1...v1.0.2)
 
 
