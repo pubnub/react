@@ -1,34 +1,43 @@
-[Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.2...v1.1.0)
+
+## [v1.1.0](https://github.com/pubnub/pubnub-react/tree/v1.1.0)
+  October-01-2017
 
 
-
+  [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.2...v1.1.0)
 
 - 🌟keep the stack of messages with only the latest 100
 
 
 
 
-[Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.1...v1.0.2)
+## [v1.0.2](https://github.com/pubnub/pubnub-react/tree/v1.0.2)
+  September-18-2017
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.1...v1.0.2)
+
+- 🌟add npmignore
 
 
 
 
-- 🌟add npmignore and changelog
+## [v1.0.1](https://github.com/pubnub/pubnub-react/tree/v1.0.1)
+  August-04-2017
 
 
-
-[Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.0...v1.0.1)
-
-
-
+  [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.0.0...v1.0.1)
 
 - 🌟add webpack
 
 
 
-## [v1.0.0](https://github.com/pubnub/pubnub-react/tree/v1.0.0)
 
+## [v1.0.0](https://github.com/pubnub/pubnub-react/tree/v1.0.0)
+  August-02-2017
 
 
 
 - 🌟first public version
+
+
+
