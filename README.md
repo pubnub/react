@@ -29,11 +29,10 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
+    this.pubnub.init(this);
   }
   
   componentWillMount() {
-    this.pubnub.init(this);
-    
     this.pubnub.subscribe({ channels: ['channel1'], withPresence: true });
     
     this.pubnub.getMessage('channel1', (msg) => {
@@ -58,46 +57,53 @@ export default class extends Component {
 
 ## How to use PubNubReact
 
-In order to get the integration between your Rect's Component and PubNub, PubNubReact will be the way to get this without any kind
-of difficulty or extra job when you need render data in your UI.
+In order to get the integration between your React's Component and PubNub, PubNubReact will be the way to get this without 
+any kind of difficulty or extra job when you need render data in your UI.
+
+- An instance of **PubNubReact** can be associated to only a Component.
+- Create and initialize your **PubNubReact** from the constructor.
+- If you want to subscribe a channel automatically as soon as the component will be displayed on the screen, you will have to 
+  subscribe it from the mounting point with the usage of `componentWillMount()` provided by React.
+- SDK will have created three states which are handled by the instance directly and these are **pn_messages**, **pn_presence** and 
+  **pn_status** please only use them in reading mode if you want to use them for any reason. In addition the trigger events will 
+  give you some extra features to manage the data allocated in theses states.
 
 ```
 import PubNubReact from 'pubnub-react';
 ```
 
-An instance of `PubNubReact` can be associated to only a Component.
-
-Create your PubNubReact instance inside the `constructor()` or `componentWillMount()` of your React's Component.
-
 ```
 constructor(props) {
   super(props);
   this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
-}
-```
-
-Uses the `init` method of the instance with your Component like a parameter to associate them, the `init` method has to be executed  
-inside `componentWillMount()` method provided for React in its lifecycle. In this way the `init` will set up everything what the SDK 
-needs before the first render.
-
-```
-componentWillMount() {
   this.pubnub.init(this);
 }
 ```
 
-After executing the `init` method the SDK will have created three states which are handled by the instance directly
-**pn_messages**, **pn_presence** and **pn_status** please only use them in reading mode if you want to use them. But the 
-trigger events will give you a best and simplest way to manage the data allocated in theses states.
+```
+componentWillMount() {
+  this.pubnub.subscribe({
+    channels: ['channel1']
+  });
+   
+  this.pubnub.getMessage('channel1', (msg) => {
+    console.log(msg);
+  });
+}
+```
 
 ## Trigger Events
 
-As is described above **PubNubReact SDK** is a wrapper of **PubNub Javascript SDK** You can also add listeners or using whatever 
-feature available in the same way which Javascript SDK is done. But if you will want to get a fast develop, 
-please uses the trigger events in order to get a way integrated with React/React Native.
+With the trigger events you can find a way to get real time apps with PubNub React very fast because it will be resolved 
+the synchronization between the data received and the user interface through of updating of the states, invoking the render 
+of the React's Component.
 
-To execute the trigger events you have to execute the `init` method first, in this way `getMessage`, `getPresence` and 
-`getStatus` will be available; these trigger events have the responsability to register a channel or a channelGroup 
+The trigger events are methods which encapsulate the events (message, presence and status) with extra functionality to offer 
+integration and get the process of development faster because will be resolved different scenarios which you can find when 
+you are working with React\React Native.
+
+To execute the trigger events you have to execute first the method `init`, in this way `getMessage`, `getPresence` and 
+`getStatus` will be available; these trigger events have the responsibility to register a channel or a channelGroup 
 in order to capture any real time message as soon as this is received and the Component renders automatically the user interface.
 
 The `getStatus` will only say to the Component that this has to render again if there is an update in the global state of the network.
@@ -107,9 +113,7 @@ The `getStatus` will only say to the Component that this has to render again if 
 ```
 ...
 
-componentWillMount() {
-  this.pubnub.init(this);
-  
+componentWillMount() {  
   this.pubnub.getStatus();
   
   this.pubnub.getMessage('channel1');
@@ -132,8 +136,6 @@ componentWillMount() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getMessage('channel1');
   
   ...
@@ -158,8 +160,6 @@ render() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getMessage('channel1');
   
   ...
@@ -184,8 +184,6 @@ of procedure.
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getMessage('channel1', (msg) => {
     console.log(msg);
   });
@@ -204,8 +202,6 @@ value when you attach the channel for first time with `getMesage`.
 
 // the stack for the channel1 will always have the latest 20 messages.
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getMessage('channel1', (msg) => {
     console.log(msg);
   }, 20);
@@ -222,8 +218,6 @@ or
 
 // the stack for the channel1 will always have the latest 20 messages.
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getMessage('channel1', 20);
   
   ...
@@ -240,8 +234,6 @@ componentWillMount() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getPresence('channel1', (presence) => {
     console.log(presence);
   });
@@ -267,8 +259,6 @@ render() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getPresence('channel1', (presence) => {
     console.log(presence);
   });
@@ -294,8 +284,6 @@ render() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getStatus((status) => {
     console.log(status);
   });
@@ -321,8 +309,6 @@ render() {
 ...
 
 componentWillMount() {
-  this.pubnub.init(this);
-  
   this.pubnub.getStatus((status) => {
     console.log(status);
   });
