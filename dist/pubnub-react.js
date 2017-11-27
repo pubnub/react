@@ -669,6 +669,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			"publish",
 			"fire",
 			"history",
+			"deleteMessages",
+			"fetchMessages",
 			"time",
 			"reconnect",
 			"stop",
