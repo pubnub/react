@@ -27,6 +27,7 @@
     "getSubscribedChannelGroups",
     "encrypt",
     "decrypt",
+    "deleteMessages",
     "getAuthKey",
     "setAuthKey",
     "setCipherKey",
