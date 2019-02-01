@@ -20,6 +20,10 @@ export default class PubNubReact {
    * @param {component} args
    */
   init(component) {
+    if(typeof component === 'function'){
+      var component = {setState: component, state:{}};
+    } 
+    
     if (!component.state) {
       component.state = { pn_messages: {}, pn_status: {}, pn_presence: {} };
     } else {
