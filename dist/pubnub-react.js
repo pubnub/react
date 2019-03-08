@@ -685,7 +685,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			"getUUID",
 			"setUUID",
 			"getFilterExpression",
-			"setFilterExpression"
+			"setFilterExpression",
+			"messageCounts"
 		],
 		"common_callbacks_to_wrap": [
 			"callback",

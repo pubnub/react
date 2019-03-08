@@ -1,3 +1,13 @@
+## [v1.3.0](https://github.com/pubnub/pubnub-react/tree/v1.3.0)
+  March-08-2018
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.2.0...v1.3.0)
+
+- 🌟add messageCounts
+
+
+
 ## [v1.2.0](https://github.com/pubnub/pubnub-react/tree/v1.2.0)
   November-23-2017
 
@@ -7,6 +17,9 @@
 - 🌟add fetchMessages and deleteMessages
 
 
+
+## [v1.1.1](https://github.com/pubnub/pubnub-react/tree/v1.1.1)
+  November-14-2017
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.1.0...v1.1.1)
