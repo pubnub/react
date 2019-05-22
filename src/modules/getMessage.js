@@ -29,11 +29,13 @@ function init(component, channel) {
 function emit(instance, channel, message) {
   let messages = instance._component.state.pn_messages[channel];
   let keepMessages = instance._keepMessages[channel];
+  
+  if (messages) {
+    messages.push(message);
 
-  messages.push(message);
-
-  if (keepMessages && messages.length > keepMessages) {
-    messages = messages.slice(messages.length - keepMessages);
+    if (keepMessages && messages.length > keepMessages) {
+      messages = messages.slice(messages.length - keepMessages);
+    }
   }
 
   instance._component.setState(prevState => ({
