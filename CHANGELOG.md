@@ -1,3 +1,15 @@
+## [v1.3.1](https://github.com/pubnub/pubnub-react/tree/v1.3.1)
+  March-08-2018
+
+
+  [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.2.0...v1.3.1)
+
+- 🌟 Update minimum JS SDK version
+- 🌟 Add ESLint config and eslint-plugin-react
+- 🌟 Fix some tests, skip some tests. Really we just need to redo them
+
+
+
 ## [v1.3.0](https://github.com/pubnub/pubnub-react/tree/v1.3.0)
   March-08-2018
 
