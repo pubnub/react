@@ -50,6 +50,7 @@
     "eslint-config-pubnub": "^2.0.0",
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-react": "^7.13.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
