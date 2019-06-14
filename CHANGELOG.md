@@ -11,7 +11,7 @@
 
 
 ## [v1.3.0](https://github.com/pubnub/pubnub-react/tree/v1.3.0)
-  March-08-2018
+  March-08-2019
 
 
   [Full Changelog](https://github.com/pubnub/pubnub-react/compare/v1.2.0...v1.3.0)
