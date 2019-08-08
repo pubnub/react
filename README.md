@@ -1,419 +1,148 @@
-# PubNub React
+# TSDX React User Guide
 
-Welcome! We're here to get you started quickly with your integration between PubNub and React\React Native.
-PubNub makes it easy to integrate real-time bidirectional communication into your app.
+Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-**Pubnub React** is a wrapper of **PubNub JavaScript SDK** [version 4](https://www.pubnub.com/docs/javascript/pubnub-javascript-sdk-v4)
-that adds a few of extra features to simplify the integration with React\React Native:
+> This TSDX setup is meant for developing React components (not apps!) that can be published to NPM. If you’re looking to build an app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
 
-You can still use the native PubNub JavaScript SDK if you feel this will be more suitable for your situation.
+> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
 
-## Communication
+## Commands
 
-- If you **need help** or have a **general question**, contact <support@pubnub.com>
-- If you **want to contribute**, please open a pull request against the `develop` branch.
+TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
 
-## Install PubNub React SDK
-
-```shell
-npm install pubnub-react
-```
-
-## Hello World Example
+The recommended workflow is to run TSDX in one terminal:
 
 ```
-import React, { Component } from 'react';
-import PubNubReact from 'pubnub-react';
+npm start # or yarn start
+```
 
-export default class extends Component {
-  constructor(props) {
-    super(props);
-    this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
-    this.pubnub.init(this);
-  }
-  
-  componentWillMount() {
-    this.pubnub.subscribe({ channels: ['channel1'], withPresence: true });
-    
-    this.pubnub.getMessage('channel1', (msg) => {
-      console.log(msg);
-    });
-    
-    this.pubnub.getStatus((st) => {
-      console.log(st);
-      this.pubnub.publish({ message: 'hello world from react', channel: 'channel1' });
-    });
-  }
-  
-  componentWillUnmount() {
-    this.pubnub.unsubscribe({ channels: ['channel1'] });
-  }
-  
-  render() {
-    ...
-  }
+This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+
+Then run the example inside another:
+
+```
+cd example
+npm i # or yarn to install dependencies
+npm start # or yarn start
+```
+
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, [we use Parcel's aliasing](https://github.com/palmerhq/tsdx/pull/88/files).
+
+To do a one-off build, use `npm run build` or `yarn build`.
+
+To run tests, use `npm test` or `yarn test`.
+
+## Configuration
+
+Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files) with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+
+### Jest
+
+Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
+
+#### Setup Files
+
+This is the folder structure we set up for you:
+
+```
+/example
+  index.html
+  index.tsx       # test your component here in a demo app
+  package.json
+  tsconfig.json
+/src
+  index.tsx       # EDIT THIS
+/test
+  blah.test.tsx   # EDIT THIS
+.gitignore
+package.json
+README.md         # EDIT THIS
+tsconfig.json
+```
+
+#### React Testing Library
+
+We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+
+### Rollup
+
+TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+
+### TypeScript
+
+`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+
+## Continuous Integration
+
+### Travis
+
+_to be completed_
+
+### Circle
+
+_to be completed_
+
+## Optimizations
+
+Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+
+```js
+// ./types/index.d.ts
+declare var __DEV__: boolean;
+
+// inside your code...
+if (__DEV__) {
+  console.log('foo');
 }
 ```
 
-## How to use PubNubReact
+You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
 
-In order to get the integration between your React's Component and PubNub, PubNubReact will be the way to get this without 
-any kind of difficulty or extra job when you need render data in your UI.
+## Module Formats
 
-- An instance of **PubNubReact** can be associated to only a Component.
-- Create and initialize your **PubNubReact** from the constructor.
-- If you want to subscribe a channel automatically as soon as the component will be displayed on the screen, you will have to 
-  subscribe it from the mounting point with the usage of `componentWillMount()` provided by React.
-- SDK will have created three states which are handled by the instance directly and these are **pn_messages**, **pn_presence** and 
-  **pn_status** please only use them in reading mode if you want to use them for any reason. In addition the trigger events will 
-  give you some extra features to manage the data allocated in theses states.
+CJS, ESModules, and UMD module formats are supported.
+
+The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+
+## Using the Playground
 
 ```
-import PubNubReact from 'pubnub-react';
+cd example
+npm i # or yarn to install dependencies
+npm start # or yarn start
 ```
 
-```
-constructor(props) {
-  super(props);
-  this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
-  this.pubnub.init(this);
-}
-```
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**!
 
-```
-componentWillMount() {
-  this.pubnub.subscribe({
-    channels: ['channel1']
-  });
-   
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  });
-}
-```
+## Named Exports
 
-## Trigger Events
+Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
 
-With the trigger events you can find a way to get real time apps with PubNub React very fast because it will be resolved 
-the synchronization between the data received and the user interface through of updating of the states, invoking the render 
-of the React's Component.
+## Including Styles
 
-The trigger events are methods which encapsulate the events (message, presence and status) with extra functionality to offer 
-integration and get the process of development faster because will be resolved different scenarios which you can find when 
-you are working with React\React Native.
+There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
 
-To execute the trigger events you have to execute first the method `init`, in this way `getMessage`, `getPresence` and 
-`getStatus` will be available; these trigger events have the responsibility to register a channel or a channelGroup 
-in order to capture any real time message as soon as this is received and the Component renders automatically the user interface.
+For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
 
-The `getStatus` will only say to the Component that this has to render again if there is an update in the global state of the network.
+## Publishing to NPM
 
-**Registering a channel to be handled by the trigger event**
+We recommend using https://github.com/sindresorhus/np.
 
-```
-...
+## Usage with Lerna
 
-componentWillMount() {  
-  this.pubnub.getStatus();
-  
-  this.pubnub.getMessage('channel1');
-  this.pubnub.getMessage('channel2');
-  this.pubnub.getMessage('channelGroup1');
-  
-  this.pubnub.getPresence('channel1');
-  this.pubnub.getPresence('channel2');
-  
-  ...
-}
+When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
 
-...
+The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
+
+Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
+
+```diff
+   "alias": {
+-    "react": "../node_modules/react",
+-    "react-dom": "../node_modules/react-dom"
++    "react": "../../../node_modules/react",
++    "react-dom": "../../../node_modules/react-dom"
+   },
 ```
 
-### getMessage
-
-**Rendering real time messages from React**
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1');
-  
-  ...
-}
-
-render() {
-  const messages = this.pubnub.getMessage('channel1');
-  return (
-    <div>
-      <ul>
-        {messages.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
-      </ul>
-    </div>
-  );
-}
-
-...
-```
-
-**Rendering real time messages from React Native**
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1');
-  
-  ...
-}
-
-render() {
-  const messages = this.pubnub.getMessage('channel1');
-  return (
-    <View>
-      {messages.map((m) => <Text>{m.message}</Text>)}
-    </View>
-  );
-}
-
-...
-```
-
-In addition to be used to register channels or channelGroups you can also catch each message if you want to give it some kind
-of procedure.
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  });
-  
-  ...
-}
-
-...
-```
-
-When you are using `getMessage` this is going to keep the latest 100 messages received by default. But you can change this
-value when you attach the channel for first time with `getMesage`.
-
-```
-...
-
-// the stack for the channel1 will always have the latest 20 messages.
-componentWillMount() {
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  }, 20);
-  
-  ...
-}
-
-...
-```
-or
-
-```
-...
-
-// the stack for the channel1 will always have the latest 20 messages.
-componentWillMount() {
-  this.pubnub.getMessage('channel1', 20);
-  
-  ...
-}
-
-...
-```
-
-### getPresence
-
-**Rendering presence object from react**
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getPresence('channel1', (presence) => {
-    console.log(presence);
-  });
-  
-  ...
-}
-
-render() {
-  const presence = this.pubnub.getPresence('channel1');
-  return (
-    <div>
-      <p>{presence.action}</p>
-    </div>
-  );
-}
-
-...
-```
-
-**Rendering presence object from React Native**
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getPresence('channel1', (presence) => {
-    console.log(presence);
-  });
-  
-  ...
-}
-
-render() {
-  const presence = this.pubnub.getPresence('channel1');
-  return (
-    <View>
-       <Text>{presence.action}</Text>
-    </View>
-  );
-}
-
-...
-```
-
-**Rendering the global status from React**
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getStatus((status) => {
-    console.log(status);
-  });
-  
-  ...
-}
-
-render() {
-  const status = this.pubnub.getStatus();
-  return (
-    <div>
-      <p>{status.category}</p>
-    </div>
-  );
-}
-
-...
-```
-
-**Rendering the global status from React Native**
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getStatus((status) => {
-    console.log(status);
-  });
-  
-  ...
-}
-
-render() {
-  const status = this.pubnub.getStatus();
-  return (
-    <View>
-       <Text>{status.category}</Text>
-    </View>
-  );
-}
-
-...
-```
-
-## Cleaning and releasing
-
-You can execute clean to remove all message cached in the state of the Component by the instance in run time without 
-affecting the capture of new incoming messages for the trigger events.
-
-```
-this.pubnub.clean('myChannel1');
-```
-
-```
-this.pubnub.clean('myGroup1');
-```
-
-You can execute release if you want to remove all message cached and stop of capturing new incoming messages for the
-trigger events.
-
-```
-this.pubnub.release('myChannel1');
-```
-
-```
-this.pubnub.release('myGroup1');
-```
-
-```
-this.pubnub.release(['myChannel1', 'myChannel2']);
-```
-
-## Accessing Methods
-
-All methods of the Native Javascript SDKs are wrapped within the PubNubReact SDK. To learn more about PubNub JavaScript 
-features and methods available please refer to the API Reference of the Javascript SDK, here some examples:
-
-* [JavaScript V4 API Reference](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4)
-
-**Publish a message**
-
-```
-this.pubnub.publish({channel: 'myChannel', message: 'Hello!'}, (response) => {
-  console.log(response);
-});
-```
-
-**Subscribe a channel**
-
-To get that `presence` event works, do not forget to add ```withPresence: true```
-
-```javascript
-this.pubnub.subscribe({
-    channels  : ['channel1', 'channel2', 'channel3'],
-    channelGroups: ['channelGroup1', 'channelGroup2'],
-    withPresence: true
-});
-```
-
-**Unsubscribe a channel**
-
-```javascript
-this.pubnub.unsubscribe('channel1');
-```
-
-### Channels with history
-
-You can retrieve published messages from archival storage for this requires that [Storage and Playback](http://www.pubnub.com/knowledge-base/discussion/644/how-do-i-enable-add-on-features-for-my-keys) add-on is enabled
-for your keys. In order to get more information about this feature - see [History](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4#history).
-
-```javascript
-this.pubnub.history({ channel: 'myChannel1' }).then((response) => {
-  console.log(response);
-});
-```
-
-**Retriving the history from ```getMessage``` method:**
-
-At the moment that you are subscribing a channel you can pass the optional parameter ```autoload``` this value has to
-contain a value from 1 to 100 in order to retrieve the last messages published in the channel. When the ```getMessage```
-is called this going to retrieve the history.
-
-```
-this.pubnub.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true, autoload: 100});
-```
-
-Also you can use a callback to know when the retrieving process has finished.
-
-```
-let messages = this.pubnub.getMessage('myChannel1', () => {
-  console.log(messages);
-});
-```
+An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
