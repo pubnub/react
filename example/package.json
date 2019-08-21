@@ -8,7 +8,7 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "pubnub": "^4.24.5",
+    "pubnub": "^4.25.0",
     "react-app-polyfill": "^1.0.0",
     "ts-invariant": "^0.4.4"
   },

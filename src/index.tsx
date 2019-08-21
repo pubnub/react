@@ -1,6 +1,5 @@
-import 'react-app-polyfill/ie11';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
+import { PubNubProvider } from './context/PubNubProvider';
+import { PubNubConsumer } from './context/PubNubConsumer';
+import { usePubNub } from './hooks/usePubNub';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export { PubNubProvider, PubNubConsumer, usePubNub };

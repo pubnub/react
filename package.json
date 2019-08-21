@@ -1,8 +1,9 @@
 {
-  "name": "reactsdk",
-  "version": "0.1.0",
+  "name": "pubnub-react",
+  "version": "v2.0.0",
+  "description": "Publish & Subscribe Real-time Messaging with PubNub",
   "main": "dist/index.js",
-  "module": "dist/myproject2.esm.js",
+  "module": "dist/pubnub-react.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
@@ -10,8 +11,20 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --env=jsdom"
+    "test": "tsdx test --env=jsdom",
+    "lint": "tsdx lint"
   },
+  "keywords": [
+    "cloud",
+    "publish",
+    "subscribe",
+    "websockets",
+    "comet",
+    "bosh",
+    "xmpp",
+    "real-time",
+    "messaging"
+  ],
   "peerDependencies": {
     "react": ">=16"
   },
@@ -38,5 +51,8 @@
     "tsdx": "^0.7.2",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "ts-invariant": "^0.4.4"
   }
 }

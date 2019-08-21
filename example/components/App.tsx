@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import MyRootComponent from './MyRootComponent';
 import PubNub from 'pubnub';
-import { PubNubProvider } from '../context/PubNubProvider';
+import { PubNubProvider } from '../../src/index';
 
 const pubNubConfig = require('../config/pubnub.json');
 const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
