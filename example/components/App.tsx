@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import MyRootComponent from './MyRootComponent';
 import PubNub from 'pubnub';
 import { PubNubProvider } from '../../src/index';

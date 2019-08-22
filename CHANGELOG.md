@@ -1,3 +1,11 @@
+## [v2.0.1](https://github.com/pubnub/react/tree/v2.0)
+
+August-22-2019
+
+- 🌟 Setup travis
+- 🌟 Override jest 'testMatch' location
+- 🌟 Add CONTRIBUTING.md
+
 ## [v2.0.0](https://github.com/pubnub/react/tree/v2.0)
 
 August-08-2019
@@ -6,7 +14,7 @@ August-08-2019
 - 🌟 Build provider, context and consumer components with usePubNub hook to get the PubNub client instance
 - 🌟 Create an example with React's Suspense and lazy
 
-## [v1.3.1](https://github.com/pubnub/pubnub-react/tree/v1.3.1)
+## [v1.3.1](https://github.com/pubnub/pubnub-react/tree/v1.3.1)d
 
 June-14-2019
 

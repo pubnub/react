@@ -1,9 +1,14 @@
 ---
 changelog:
   - changes:
+      - text: 'setup travis'
+        type: improvement
+    date: 2019-08-22
+    version: v2.0.1
+  - changes:
       - text: 'second public version'
         type: feature
-    date: 2019-08-21
+    date: 2019-08-08
     version: v2.0.0
   - changes:
       - text: 'update pubnub js sdk'
