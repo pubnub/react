@@ -1,13 +1,18 @@
 {
   "name": "pubnub-react",
-  "version": "v2.0.0",
+  "version": "2.0.0-beta.1",
   "description": "Publish & Subscribe Real-time Messaging with PubNub",
+  "author": "PubNub <support@pubnub.com>",
   "main": "dist/index.js",
   "module": "dist/pubnub-react.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pubnub/react.git"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
@@ -25,6 +30,7 @@
     "real-time",
     "messaging"
   ],
+  "license": "MIT",
   "peerDependencies": {
     "react": ">=16"
   },
