@@ -1,4 +1,4 @@
-## [v2.0.1](https://github.com/pubnub/react/tree/v2.0)
+## [v2.0.1-beta.1](https://github.com/pubnub/react/tree/v2.0)
 
 August-22-2019
 
@@ -6,7 +6,7 @@ August-22-2019
 - 🌟 Override jest 'testMatch' location
 - 🌟 Add CONTRIBUTING.md
 
-## [v2.0.0](https://github.com/pubnub/react/tree/v2.0)
+## [v2.0.0-beta.1](https://github.com/pubnub/react/tree/v2.0)
 
 August-08-2019
 
