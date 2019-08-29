@@ -21,7 +21,9 @@ describe('<PubNubProvider /> component', () => {
       const PubNubContext = getPubNubContext();
       render(
         <PubNubContext.Provider value={{}}>
-          <PubNubProvider client={undefined}></PubNubProvider>
+          <PubNubProvider client={undefined}>
+            <div />
+          </PubNubProvider>
         </PubNubContext.Provider>
       );
     }).toThrowError(
