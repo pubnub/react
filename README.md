@@ -1,73 +1,95 @@
-# TSDX React User Guide
+# PubNub React SDK v2.0
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Welcome to the new PubNub React SDK!
 
-> This TSDX setup is meant for developing React components (not apps!) that can be published to NPM. If you’re looking to build an app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+## System requirements
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+To use the React SDK, you need:
 
-## Commands
+* React 16.8 or above
+* Javascript xyz
+* **[what else?]**
 
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
+## Consumer
 
-The recommended workflow is to run TSDX in one terminal:
+### Example consumer usage
 
-```
-npm start # or yarn start
-```
-
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-Then run the example inside another:
-
-```
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+```js
+// do the thing
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, [we use Parcel's aliasing](https://github.com/palmerhq/tsdx/pull/88/files).
+## Provider
 
-To do a one-off build, use `npm run build` or `yarn build`.
+### Provider overview
 
-To run tests, use `npm test` or `yarn test`.
+### Provider props
 
-## Configuration
+### Example provider usage
 
-Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files) with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```js
+// do the thing
 ```
 
-#### React Testing Library
+## Context
 
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+<!-- lifted from reactjs.org -->
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.
 
-### Rollup
+Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language.
 
-TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
 
-### TypeScript
+### Context.Provider
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+<!-- lifted from reactjs.org -->
+Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes.
+
+Accepts a `value` prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
+
+All consumers that are descendants of a Provider will re-render whenever the Provider’s `value` prop changes. The propagation from Provider to its descendant consumers is not subject to the `shouldComponentUpdate` method, so the consumer is updated even when an ancestor component bails out of the update.
+
+Changes are determined by comparing the new and old values using the same algorithm as `Object.is`.
+
+### Class.contextType
+
+<!-- lifted from reactjs.org -->
+The `contextType` property on a class can be assigned a Context object created by `React.createContext()`. This lets you consume the nearest current value of that Context type using `this.context`. You can reference this in any of the lifecycle methods including the render function.
+
+### Context.Consumer
+
+<!-- lifted from reactjs.org -->
+A React component that subscribes to context changes. This lets you subscribe to a context within a function component.
+
+### Example context usage
+
+```js
+// do the thing
+```
+
+## The usePubNub hook
+
+Hooks are a new feature added in React 16.8 that allow you to use React features without writing a class. For a general overview of hooks, refer to [the React documentation](https://reactjs.org/docs/hooks-intro.html).
+
+The PubNub hook lets you interact with PubNub in function components:
+
+```js
+import React, { useState, useEffects, usePubNub } from 'react';
+
+function Example() {
+
+  usePubNub(() => {
+    // do the things
+
+  });
+
+  return (
+    <div>
+      <p>You did the thing</p>
+    </div>
+  );
+}
+```
+
+> **Note**: As you might expect, the `usePubNub` hook requires cleanup. For more information on the cleanup concept, refer to [the React documentation](https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup).
+
+### Example usage
