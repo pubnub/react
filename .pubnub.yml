@@ -1,59 +1,13 @@
 ---
 changelog:
   - changes:
-      - text: 'setup travis'
-        type: improvement
-    date: 2019-08-22
-    version: v2.0.1-beta.1
-  - changes:
       - text: 'second public version'
         type: feature
-    date: 2019-08-08
+    date: 2019-09-09
     version: v2.0.0-beta.1
-  - changes:
-      - text: 'update pubnub js sdk'
-        type: improvement
-    date: 2019-06-14
-    version: v1.3.1
-  - changes:
-      - text: 'add messageCounts'
-        type: feature
-    date: 2019-03-08
-    version: v1.3.0
-  - changes:
-      - text: 'add fetchMessages and deleteMessages'
-        type: feature
-    date: 2017-11-23
-    version: v1.2.0
-  - changes:
-      - text: 'update readme'
-        type: improvement
-    date: 2017-11-14
-    version: v1.1.1
-  - changes:
-      - text: 'keep the stack of messages with only the latest 100'
-        type: feature
-    date: 2017-10-01
-    version: v1.1.0
-  - changes:
-      - text: 'add npmignore'
-        type: feature
-    date: 2017-09-18
-    version: v1.0.2
-  - changes:
-      - text: 'add webpack'
-        type: feature
-    date: 2017-08-04
-    version: v1.0.1
-  - changes:
-      - text: 'first public version'
-        type: feature
-    date: 2017-08-02
-    version: v1.0.0
 files:
-  - dist/pubnub-react.js
-  - dist/pubnub-react.min.js
+  - dist/pubnub-react.esm.js
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: '2.0.0'
+version: 'v2.0.0-beta.1'
