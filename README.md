@@ -10,24 +10,66 @@ To use the React SDK, you need:
 * Javascript xyz
 * **[what else?]**
 
-## Consumer
+## PubNubProvider
 
-### Example consumer usage
+The PubNubProvider makes available a PubNub client instance to a React component tree. You instantiate the provider as follows (note that your publish and subscribe keys are contained in the `pubnub.json` file):
 
 ```js
-// do the thing
+import PubNub from 'pubnub';
+import { PubNubProvider } from '../../src/index';
+
+const pubNubConfig = require('../config/pubnub.json');
+const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
+
+const App = () => {
+  return (
+    <PubNubProvider client={pubNubClient}>
+      <MyRootComponent />
+    </PubNubProvider>
+  );
+};
+
+export default App;
 ```
 
-## Provider
+### PubNubProvider props
 
-### Provider overview
+The PubNubProvider component takes a single prop:
 
-### Provider props
+* **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
 
-### Example provider usage
+## PubNubConsumer
+
+The PubNubConsumer allows you to access the client instance you made available with a PubNubProvider.
+
+### PubNubConsumer props
+
+The PubNubConsumer component takes a single prop:
+
+* **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
+
+### Example PubNubConsumer usage
+
+Once you've created a PubNubProvider, you can access the client with a PubNubConsumer.
 
 ```js
-// do the thing
+import React from 'react';
+import PubNub from 'pubnub';
+import { PubNubProvider } from '../PubNubProvider';
+import { PubNubConsumer } from '../PubNubConsumer';
+import { getPubNubContext } from '../PubNubContext';
+
+const pubNubConfig = require('../config/pubnub.json');
+const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
+
+const App = () => {
+  <PubNubProvider client={pubNubClient}>
+    <PubNubConsumer>
+      {client => "success!" /* do something now */ }
+    </PubNubConsumer>
+  </PubNubProvider>
+};
+
 ```
 
 ## Context
@@ -73,7 +115,9 @@ Hooks are a new feature added in React 16.8 that allow you to use React features
 The PubNub hook lets you interact with PubNub in function components:
 
 ```js
-import React, { useState, useEffects, usePubNub } from 'react';
+import React, { useState, useEffects } from 'react';
+import { usePubNub } from '../../src/index';
+import { getPubNubContext } from '../context/PubNubContext';
 
 function Example() {
 
