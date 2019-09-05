@@ -13,7 +13,3 @@
 ## How to Run the App Locally
 
 - To run the app in the local server, move to the `example` directory, and run `npm start`
-
-## How to Release
-
-### TO-DO
