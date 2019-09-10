@@ -1,4 +1,4 @@
-## [v2.0.0-beta.1](https://github.com/pubnub/react/tree/v2.0)
+## [v2.0.0-beta.2](https://github.com/pubnub/react/tree/v2.0)
 
 September-09-2019
 
