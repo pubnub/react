@@ -1,5 +1,14 @@
 # PubNub React
 
+---
+
+**Beta Version Available**
+
+A **beta release** of the PubNub React framework, version 2.0 is now available.
+You can access it in the [v2.0 branch](https://github.com/pubnub/react/tree/v2.0) of this repository.
+
+---
+
 Welcome! We're here to get you started quickly with your integration between PubNub and React\React Native.
 PubNub makes it easy to integrate real-time bidirectional communication into your app.
 
