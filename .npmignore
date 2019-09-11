@@ -9,3 +9,14 @@ coverage/
 *.iml
 
 .babelrc
+
+# No rollup cache
+.rts2_cache*
+
+# No source or test needed
+src
+test
+
+# No build specifics needed
+.pubnub.yml
+.travis.yml
