@@ -1,6 +1,6 @@
 {
   "name": "pubnub-react",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Publish & Subscribe Real-time Messaging with PubNub",
   "author": "PubNub <support@pubnub.com>",
   "main": "dist/index.js",
