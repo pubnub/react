@@ -9,11 +9,161 @@ The [PubNub website](https://www.pubnub.com/) has many [tutorials](https://www.p
 
 ## Contents
 
+* [Quick start](#quick-start)
 * [System requirements](#system-requirements)
 * [PubNubProvider](#pubnubprovider)
 * [PubNubConsumer](#pubnubconsumer)
 * [PubNubContext](#pubnubcontext)
 * [usePubNub hook](#usepubnub-hook)
+
+## Quick start
+
+**To get started right away**, do the following:
+
+1. Set up your React project.
+
+    For a quick single-page app, [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) is a good starting point:
+
+    ```bash
+    npx create-react-app hello-pubnub-react
+    ``` 
+
+1. Add the PubNub JavaScript SDK and React framework packages to your project:
+
+    ```bash
+    npm install pubnub
+    npm install pubnub-react@beta
+    ```
+
+1. Replace the contents of `src/App.js` with the following:
+
+    ```javascript
+    import React, { useState } from 'react';
+    import PubNub from 'pubnub';
+    import { PubNubProvider, PubNubConsumer } from 'pubnub-react';
+    import './App.css';
+
+    const pubnub = new PubNub({
+      publishKey: 'pub-c-0156ebbb-6d5d-48c1-ba5a-a0c4c4629ceb',
+      subscribeKey: 'sub-c-611a828c-4504-11e9-8dbe-225b5c64e997',
+    });
+    const channels = ['awesomeChannel'];
+
+    function App() {
+      const [messages, addMessage] = useState([]);
+      const [message, setMessage] = useState('');
+
+      const sendMessage = message => {
+        pubnub.publish(
+          {
+            channel: channels[0],
+            message,
+          },
+          () => setMessage('')
+        );
+      };
+
+      return (
+        <PubNubProvider client={pubnub}>
+          <div className="App">
+            <header className="App-header">
+              <PubNubConsumer>
+                {client => {
+                  client.addListener({
+                    message: messageEvent => {
+                      addMessage([...messages, messageEvent.message]);
+                    },
+                  });
+
+                  client.subscribe({ channels });
+                }}
+              </PubNubConsumer>
+              <div
+                style={{
+                  width: '500px',
+                  height: '300px',
+                  border: '1px solid black',
+                }}
+              >
+                <div style={{ backgroundColor: 'grey' }}>React Chat Example</div>
+                <div
+                  style={{
+                    backgroundColor: 'white',
+                    height: '260px',
+                    overflow: 'scroll',
+                  }}
+                >
+                  {messages.map((message, messageIndex) => {
+                    return (
+                      <div
+                        key={`message-${messageIndex}`}
+                        style={{
+                          display: 'inline-block',
+                          float: 'left',
+                          backgroundColor: '#eee',
+                          color: 'black',
+                          borderRadius: '20px',
+                          margin: '5px',
+                          padding: '8px 15px',
+                        }}
+                      >
+                        {message}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    height: '40px',
+                    backgroundColor: 'lightgrey',
+                  }}
+                >
+                  <input
+                    type="text"
+                    style={{
+                      borderRadius: '5px',
+                      flexGrow: 1,
+                      fontSize: '18px',
+                    }}
+                    placeholder="Type your message"
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                  />
+                  <button
+                    style={{
+                      backgroundColor: 'blue',
+                      color: 'white',
+                      borderRadius: '5px',
+                      fontSize: '16px',
+                    }}
+                    onClick={e => {
+                      e.preventDefault();
+                      sendMessage(message);
+                    }}
+                  >
+                    Send Message
+                  </button>
+                </div>
+              </div>
+            </header>
+          </div>
+        </PubNubProvider>
+      );
+    }
+
+    export default App;
+    ```
+
+1. In your project, run the following command:
+
+    ```bash
+    npm start
+    ```
+
+    You should see the following in your browser:
+    
+    ![chat UI screenshot][qs-screenshot]
 
 ## System requirements
 
@@ -24,13 +174,13 @@ To use the PubNub React framework, you need:
 
 ## PubNubProvider
 
-The PubNubProvider makes available a PubNub client instance to a React component tree. You instantiate the provider as follows (note that your publish and subscribe keys are contained in the `pubnub.json` file):
+The PubNubProvider makes available a PubNub client instance to a React component tree. You instantiate the provider as follows (note that this example assumes that your publish and subscribe keys are contained in the `pubnub.config.json` file):
 
 ```js
 import PubNub from 'pubnub';
-import { PubNubProvider } from '../../src/index';
+import { PubNubProvider } from 'pubnub-react';
 
-const pubNubConfig = require('../config/pubnub.json');
+const pubNubConfig = require('./pubnub.config.json');
 const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
 
 const App = () => {
@@ -134,3 +284,5 @@ const MyRootComponent = () => {
 
 export default MyRootComponent;
 ```
+
+[qs-screenshot]: ./assets/quickstart-screenshot.png
