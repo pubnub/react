@@ -44,8 +44,8 @@ The [PubNub website](https://www.pubnub.com/) has many [tutorials](https://www.p
     import './App.css';
 
     const pubnub = new PubNub({
-      publishKey: 'pub-c-0156ebbb-6d5d-48c1-ba5a-a0c4c4629ceb',
-      subscribeKey: 'sub-c-611a828c-4504-11e9-8dbe-225b5c64e997',
+      publishKey: <YOUR PUB KEY>,
+      subscribeKey: <YOUR SUB KEY>,
     });
     const channels = ['awesomeChannel'];
 
