@@ -1,8 +1,11 @@
 import React from 'react';
 import PubNub from 'pubnub';
-import { PubNubProvider } from '../PubNubProvider';
 import { PubNubConsumer } from '../PubNubConsumer';
-import { getPubNubContext } from '../PubNubContext';
+import {
+  PubNubProvider,
+  PubNubContext,
+  PubNubContextValue,
+} from '../PubNubContext';
 import { render, cleanup } from '@testing-library/react';
 
 describe('<PubNubConsumer /> component', () => {
@@ -37,10 +40,8 @@ describe('<PubNubConsumer /> component', () => {
     console.error = () => {};
 
     expect(() => {
-      // Reset the context before testing
-      const PubNubContext = getPubNubContext();
       render(
-        <PubNubContext.Provider value={{}}>
+        <PubNubContext.Provider value={({} as unknown) as PubNubContextValue}>
           <PubNubConsumer>{() => null}</PubNubConsumer>
         </PubNubContext.Provider>
       );

@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import PubNub from 'pubnub';
-import { PubNubProvider } from '../PubNubProvider';
-import { getPubNubContext } from '../PubNubContext';
+import {
+  PubNubProvider,
+  PubNubContext,
+  PubNubContextValue,
+} from '../PubNubContext';
 import { render, cleanup } from '@testing-library/react';
 
 describe('<PubNubProvider /> component', () => {
@@ -17,10 +20,8 @@ describe('<PubNubProvider /> component', () => {
     console.error = () => {};
 
     expect(() => {
-      // Reset the context before testing
-      const PubNubContext = getPubNubContext();
       render(
-        <PubNubContext.Provider value={{}}>
+        <PubNubContext.Provider value={({} as unknown) as PubNubContextValue}>
           <PubNubProvider client={(undefined as unknown) as PubNub}>
             <div />
           </PubNubProvider>
@@ -36,8 +37,8 @@ describe('<PubNubProvider /> component', () => {
 
   it('should pass a client instance to the children context', () => {
     const Child = () => {
-      const context = useContext(getPubNubContext());
-      expect(context.client).toEqual(pubNubClient);
+      const context = useContext(PubNubContext);
+      expect(context?.client).toEqual(pubNubClient);
       return null;
     };
 
