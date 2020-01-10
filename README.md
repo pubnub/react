@@ -9,12 +9,12 @@ The [PubNub website](https://www.pubnub.com/) has many [tutorials](https://www.p
 
 ## Contents
 
-* [Quick start](#quick-start)
-* [System requirements](#system-requirements)
-* [PubNubProvider](#pubnubprovider)
-* [PubNubConsumer](#pubnubconsumer)
-* [PubNubContext](#pubnubcontext)
-* [usePubNub hook](#usepubnub-hook)
+- [Quick start](#quick-start)
+- [System requirements](#system-requirements)
+- [PubNubProvider](#pubnubprovider)
+- [PubNubConsumer](#pubnubconsumer)
+- [PubNubContext](#pubnubcontext)
+- [usePubNub hook](#usepubnub-hook)
 
 ## Quick start
 
@@ -22,155 +22,155 @@ The [PubNub website](https://www.pubnub.com/) has many [tutorials](https://www.p
 
 1. Set up your React project.
 
-    For a quick single-page app, [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) is a good starting point:
+   For a quick single-page app, [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) is a good starting point:
 
-    ```bash
-    npx create-react-app hello-pubnub-react
-    ``` 
+   ```bash
+   npx create-react-app hello-pubnub-react
+   ```
 
 1. Add the PubNub JavaScript SDK and React framework packages to your project:
 
-    ```bash
-    npm install pubnub
-    npm install pubnub-react@beta
-    ```
+   ```bash
+   npm install pubnub
+   npm install pubnub-react@beta
+   ```
 
 1. Replace the contents of `src/App.js` with the following:
 
-    ```javascript
-    import React, { useState } from 'react';
-    import PubNub from 'pubnub';
-    import { PubNubProvider, PubNubConsumer } from 'pubnub-react';
-    import './App.css';
+   ```javascript
+   import React, { useState } from 'react';
+   import PubNub from 'pubnub';
+   import { PubNubProvider, PubNubConsumer } from 'pubnub-react';
+   import './App.css';
 
-    const pubnub = new PubNub({
-      publishKey: <YOUR PUB KEY>,
-      subscribeKey: <YOUR SUB KEY>,
-    });
-    const channels = ['awesomeChannel'];
+   const pubnub = new PubNub({
+     publishKey: <YOUR PUB KEY>,
+     subscribeKey: <YOUR SUB KEY>,
+   });
+   const channels = ['awesomeChannel'];
 
-    function App() {
-      const [messages, addMessage] = useState([]);
-      const [message, setMessage] = useState('');
+   function App() {
+     const [messages, addMessage] = useState([]);
+     const [message, setMessage] = useState('');
 
-      const sendMessage = message => {
-        pubnub.publish(
-          {
-            channel: channels[0],
-            message,
-          },
-          () => setMessage('')
-        );
-      };
+     const sendMessage = message => {
+       pubnub.publish(
+         {
+           channel: channels[0],
+           message,
+         },
+         () => setMessage('')
+       );
+     };
 
-      return (
-        <PubNubProvider client={pubnub}>
-          <div className="App">
-            <header className="App-header">
-              <PubNubConsumer>
-                {client => {
-                  client.addListener({
-                    message: messageEvent => {
-                      addMessage([...messages, messageEvent.message]);
-                    },
-                  });
+     return (
+       <PubNubProvider client={pubnub}>
+         <div className="App">
+           <header className="App-header">
+             <PubNubConsumer>
+               {client => {
+                 client.addListener({
+                   message: messageEvent => {
+                     addMessage([...messages, messageEvent.message]);
+                   },
+                 });
 
-                  client.subscribe({ channels });
-                }}
-              </PubNubConsumer>
-              <div
-                style={{
-                  width: '500px',
-                  height: '300px',
-                  border: '1px solid black',
-                }}
-              >
-                <div style={{ backgroundColor: 'grey' }}>React Chat Example</div>
-                <div
-                  style={{
-                    backgroundColor: 'white',
-                    height: '260px',
-                    overflow: 'scroll',
-                  }}
-                >
-                  {messages.map((message, messageIndex) => {
-                    return (
-                      <div
-                        key={`message-${messageIndex}`}
-                        style={{
-                          display: 'inline-block',
-                          float: 'left',
-                          backgroundColor: '#eee',
-                          color: 'black',
-                          borderRadius: '20px',
-                          margin: '5px',
-                          padding: '8px 15px',
-                        }}
-                      >
-                        {message}
-                      </div>
-                    );
-                  })}
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    height: '40px',
-                    backgroundColor: 'lightgrey',
-                  }}
-                >
-                  <input
-                    type="text"
-                    style={{
-                      borderRadius: '5px',
-                      flexGrow: 1,
-                      fontSize: '18px',
-                    }}
-                    placeholder="Type your message"
-                    value={message}
-                    onChange={e => setMessage(e.target.value)}
-                  />
-                  <button
-                    style={{
-                      backgroundColor: 'blue',
-                      color: 'white',
-                      borderRadius: '5px',
-                      fontSize: '16px',
-                    }}
-                    onClick={e => {
-                      e.preventDefault();
-                      sendMessage(message);
-                    }}
-                  >
-                    Send Message
-                  </button>
-                </div>
-              </div>
-            </header>
-          </div>
-        </PubNubProvider>
-      );
-    }
+                 client.subscribe({ channels });
+               }}
+             </PubNubConsumer>
+             <div
+               style={{
+                 width: '500px',
+                 height: '300px',
+                 border: '1px solid black',
+               }}
+             >
+               <div style={{ backgroundColor: 'grey' }}>React Chat Example</div>
+               <div
+                 style={{
+                   backgroundColor: 'white',
+                   height: '260px',
+                   overflow: 'scroll',
+                 }}
+               >
+                 {messages.map((message, messageIndex) => {
+                   return (
+                     <div
+                       key={`message-${messageIndex}`}
+                       style={{
+                         display: 'inline-block',
+                         float: 'left',
+                         backgroundColor: '#eee',
+                         color: 'black',
+                         borderRadius: '20px',
+                         margin: '5px',
+                         padding: '8px 15px',
+                       }}
+                     >
+                       {message}
+                     </div>
+                   );
+                 })}
+               </div>
+               <div
+                 style={{
+                   display: 'flex',
+                   height: '40px',
+                   backgroundColor: 'lightgrey',
+                 }}
+               >
+                 <input
+                   type="text"
+                   style={{
+                     borderRadius: '5px',
+                     flexGrow: 1,
+                     fontSize: '18px',
+                   }}
+                   placeholder="Type your message"
+                   value={message}
+                   onChange={e => setMessage(e.target.value)}
+                 />
+                 <button
+                   style={{
+                     backgroundColor: 'blue',
+                     color: 'white',
+                     borderRadius: '5px',
+                     fontSize: '16px',
+                   }}
+                   onClick={e => {
+                     e.preventDefault();
+                     sendMessage(message);
+                   }}
+                 >
+                   Send Message
+                 </button>
+               </div>
+             </div>
+           </header>
+         </div>
+       </PubNubProvider>
+     );
+   }
 
-    export default App;
-    ```
+   export default App;
+   ```
 
 1. In your project, run the following command:
 
-    ```bash
-    npm start
-    ```
+   ```bash
+   npm start
+   ```
 
-    You should see the following in your browser:
-    
-    ![chat UI screenshot][qs-screenshot]
+   You should see the following in your browser:
+
+   ![chat UI screenshot][qs-screenshot]
 
 ## System requirements
 
 To use the PubNub React framework, you need:
 
-* React 16.8 or above
-* PubNub [Javascript SDK](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk)
+- React 16.8 or above
+- PubNub [Javascript SDK](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk)
 
 ## PubNubProvider
 
@@ -198,7 +198,7 @@ export default App;
 
 The PubNubProvider component takes a single prop:
 
-* **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
+- **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
 
 ## PubNubConsumer
 
@@ -208,7 +208,7 @@ The PubNubConsumer allows you to access the client instance you made available w
 
 The PubNubConsumer component takes a single prop:
 
-* **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
+- **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
 
 ### Example PubNubConsumer usage
 
@@ -227,9 +227,9 @@ const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
 const App = () => {
   <PubNubProvider client={pubNubClient}>
     <PubNubConsumer>
-      {client => "success!" /* do something now */ }
+      {client => 'success!' /* do something now */}
     </PubNubConsumer>
-  </PubNubProvider>
+  </PubNubProvider>;
 };
 ```
 
@@ -248,20 +248,25 @@ Hooks are a new feature added in React 16.8 that allow you to use React features
 ### Example usage
 
 ```javascript
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePubNub } from '../../src/index';
 
 const PubNubTime = () => {
-  const PubNubClient = usePubNub();
+  const client = usePubNub();
+  const [time, setTime] = useState(null);
 
-  return (
-    <div>
-      {PubNubClient.time((status, response): void => {
-        if (status.error) console.log('error', status);
-        else console.log('response', response.timetoken);
-      })}
-    </div>
-  );
+  useEffect(() => {
+    client
+      .time()
+      .then(({ timetoken }) => {
+        setTime(timetoken);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  return <div>{time}</div>;
 };
 
 export default PubNubTime;

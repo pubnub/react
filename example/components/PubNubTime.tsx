@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePubNub } from '../../src/index';
 
 const PubNubTime = () => {
-  const PubNubClient = usePubNub();
+  const client = usePubNub();
+  const [time, setTime] = useState<number | null>(null);
 
-  return (
-    <div>
-      {PubNubClient.time((status, response): void => {
-        if (status.error) console.log('error', status);
-        else console.log('response', response.timetoken);
-      })}
-    </div>
-  );
+  useEffect(() => {
+    client
+      .time()
+      .then(({ timetoken }) => {
+        setTime(timetoken);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  return <div>{time}</div>;
 };
 
 export default PubNubTime;
