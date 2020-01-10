@@ -1,13 +1,17 @@
-import React from 'react';
-import { invariant } from 'ts-invariant';
-import { getPubNubContext } from '../context/PubNubContext';
+import { useContext } from 'react';
+import PubNub from 'pubnub';
 
-export function usePubNub(): any {
-  const { client } = React.useContext(getPubNubContext());
+import { getPubNubContext } from '../context/PubNubContext';
+import invariant from '../invariant';
+
+export function usePubNub(): PubNub {
+  const { client } = useContext(getPubNubContext());
+
   invariant(
     client,
     'No PubNub Client instance can be found. Please ensure that you ' +
       'have called `PubNubProvider` higher up in your tree.'
   );
-  return client!;
+
+  return client;
 }

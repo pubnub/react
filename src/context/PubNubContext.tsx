@@ -1,7 +1,8 @@
 import React from 'react';
+import PubNub from 'pubnub';
 
 export interface PubNubContextValue {
-  client?: object;
+  client?: PubNub;
   renderPromises?: Record<any, any>;
 }
 

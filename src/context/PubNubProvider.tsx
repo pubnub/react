@@ -1,12 +1,14 @@
 import React from 'react';
-import { invariant } from 'ts-invariant';
+import PubNub from 'pubnub';
+
 import { getPubNubContext } from './PubNubContext';
+import invariant from '../invariant';
 
 export interface PubNubProviderProps<T> {
   client: T;
   children: React.ReactNode | React.ReactNode[] | null;
 }
-export const PubNubProvider: React.FC<PubNubProviderProps<any>> = ({
+export const PubNubProvider: React.FC<PubNubProviderProps<PubNub>> = ({
   client,
   children,
 }) => {
@@ -14,18 +16,16 @@ export const PubNubProvider: React.FC<PubNubProviderProps<any>> = ({
   return (
     <PubNubContext.Consumer>
       {(context = {}) => {
-        if (client && context.client !== client) {
-          context = Object.assign({}, context, { client });
-        }
+        const newContext = { client: client, ...context };
 
         invariant(
-          context.client,
+          newContext.client,
           'PubNubProvider was not passed a client instance. Make ' +
             'sure you pass in your client via the "client" prop.'
         );
 
         return (
-          <PubNubContext.Provider value={context}>
+          <PubNubContext.Provider value={newContext}>
             {children}
           </PubNubContext.Provider>
         );

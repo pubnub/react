@@ -21,7 +21,7 @@ describe('<PubNubProvider /> component', () => {
       const PubNubContext = getPubNubContext();
       render(
         <PubNubContext.Provider value={{}}>
-          <PubNubProvider client={undefined}>
+          <PubNubProvider client={(undefined as unknown) as PubNub}>
             <div />
           </PubNubProvider>
         </PubNubContext.Provider>
