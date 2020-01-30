@@ -1,4 +1,4 @@
-import { PubNubProvider } from './context/PubNubProvider';
+import { PubNubProvider } from './context/PubNubContext';
 import { PubNubConsumer } from './context/PubNubConsumer';
 import { usePubNub } from './hooks/usePubNub';
 

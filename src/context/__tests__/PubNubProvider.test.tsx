@@ -38,7 +38,7 @@ describe('<PubNubProvider /> component', () => {
   it('should pass a client instance to the children context', () => {
     const Child = () => {
       const context = useContext(PubNubContext);
-      expect(context?.client).toEqual(pubNubClient);
+      expect(context!.client).toEqual(pubNubClient);
       return null;
     };
 
