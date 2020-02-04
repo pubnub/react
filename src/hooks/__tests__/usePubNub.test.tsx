@@ -1,7 +1,8 @@
 import React from 'react';
 import PubNub from 'pubnub';
 import { cleanup, render } from '@testing-library/react';
-import { PubNubProvider } from '../../context/PubNubContext';
+
+import { PubNubProvider } from '../../context/PubNubProvider';
 import { usePubNub } from '../usePubNub';
 
 describe('usePubNub hook', () => {

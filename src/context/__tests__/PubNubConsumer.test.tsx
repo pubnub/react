@@ -1,12 +1,10 @@
 import React from 'react';
 import PubNub from 'pubnub';
-import { PubNubConsumer } from '../PubNubConsumer';
-import {
-  PubNubProvider,
-  PubNubContext,
-  PubNubContextValue,
-} from '../PubNubContext';
 import { render, cleanup } from '@testing-library/react';
+
+import { PubNubContext, PubNubContextValue } from '../PubNubContext';
+import { PubNubConsumer } from '../PubNubConsumer';
+import { PubNubProvider } from '../PubNubProvider';
 
 describe('<PubNubConsumer /> component', () => {
   afterEach(cleanup);
