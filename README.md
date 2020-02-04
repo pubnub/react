@@ -225,11 +225,13 @@ const pubNubConfig = require('../config/pubnub.json');
 const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
 
 const App = () => {
-  <PubNubProvider client={pubNubClient}>
-    <PubNubConsumer>
-      {client => 'success!' /* do something now */}
-    </PubNubConsumer>
-  </PubNubProvider>;
+  return (
+    <PubNubProvider client={pubNubClient}>
+      <PubNubConsumer>
+        {client => 'success!' /* do something now */}
+      </PubNubConsumer>
+    </PubNubProvider>
+  );
 };
 ```
 
