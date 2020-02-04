@@ -1,15 +1,12 @@
 import React from 'react';
 import PubNub from 'pubnub';
 import { cleanup, render } from '@testing-library/react';
+
 import { PubNubProvider } from '../../context/PubNubProvider';
 import { usePubNub } from '../usePubNub';
-import { resetPubNubContext } from '../../context/PubNubContext';
 
 describe('usePubNub hook', () => {
-  afterEach(() => {
-    cleanup();
-    resetPubNubContext();
-  });
+  afterEach(cleanup);
 
   const pubNubClient = new PubNub({
     publishKey: 'x',
