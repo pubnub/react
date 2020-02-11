@@ -1,7 +1,4 @@
-# PubNub React Framework v2.0 (RC)
-
-> **This is a RC (release candidate) version of the PubNub React framework.**
-> It's provided as a preview of what's to come, and is _not likely_ to change before its GA release.
+# PubNub React Framework v2.0
 
 Welcome to the new PubNub React framework!
 This README provides a brief overview of the new framework; it assumes you're familiar with React, and with PubNub.
