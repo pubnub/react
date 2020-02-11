@@ -1,35 +1,41 @@
 import React from 'react';
-import { invariant } from 'ts-invariant';
-import { getPubNubContext } from './PubNubContext';
+import PubNub from 'pubnub';
+import invariant from 'ts-invariant';
 
-export interface PubNubProviderProps<T> {
-  client: T;
+import { PubNubContext } from './PubNubContext';
+
+export interface PubNubProviderProps<PubNubInstance> {
+  client: PubNubInstance;
   children: React.ReactNode | React.ReactNode[] | null;
 }
-export const PubNubProvider: React.FC<PubNubProviderProps<any>> = ({
+
+function appendPnsdk(pubnub: any) {
+  if (typeof pubnub._addPnsdkSuffix === 'function') {
+    pubnub._addPnsdkSuffix('React/__VERSION__');
+  }
+}
+
+export const PubNubProvider: React.FC<PubNubProviderProps<PubNub>> = ({
   client,
   children,
 }) => {
-  const PubNubContext = getPubNubContext();
+  const contextValue = React.useMemo(() => {
+    return { client };
+  }, [client]);
+
+  invariant(
+    contextValue.client,
+    'PubNubProvider was not passed a client instance. Make ' +
+      'sure you pass in your client via the "client" prop.'
+  );
+
+  React.useEffect(() => {
+    appendPnsdk(contextValue.client);
+  }, []);
+
   return (
-    <PubNubContext.Consumer>
-      {(context = {}) => {
-        if (client && context.client !== client) {
-          context = Object.assign({}, context, { client });
-        }
-
-        invariant(
-          context.client,
-          'PubNubProvider was not passed a client instance. Make ' +
-            'sure you pass in your client via the "client" prop.'
-        );
-
-        return (
-          <PubNubContext.Provider value={context}>
-            {children}
-          </PubNubContext.Provider>
-        );
-      }}
-    </PubNubContext.Consumer>
+    <PubNubContext.Provider value={contextValue}>
+      {children}
+    </PubNubContext.Provider>
   );
 };

@@ -1,23 +1,21 @@
 import React from 'react';
-import { invariant } from 'ts-invariant';
-import { getPubNubContext } from './PubNubContext';
+import PubNub from 'pubnub';
+import invariant from 'ts-invariant';
+
+import { PubNubContext } from './PubNubContext';
 
 export interface PubNubConsumerProps {
-  children: (client: object) => React.ReactChild | null;
+  children: (client: PubNub) => React.ReactChild | null;
 }
 
-export const PubNubConsumer: React.FC<PubNubConsumerProps> = props => {
-  const PubNubContext = getPubNubContext();
-  return (
-    <PubNubContext.Consumer>
-      {(context: any) => {
-        invariant(
-          context && context.client,
-          'Could not find "client" in the context of PubNubConsumer. ' +
-            'Wrap the root component in an <PubNubProvider>.'
-        );
-        return props.children(context.client);
-      }}
-    </PubNubContext.Consumer>
+export const PubNubConsumer: React.FC<PubNubConsumerProps> = ({ children }) => {
+  const context = React.useContext(PubNubContext);
+
+  invariant(
+    context && context.client,
+    'Could not find "client" in the context of PubNubConsumer. ' +
+      'Wrap the root component in an <PubNubProvider>.'
   );
+
+  return <>{children(context!.client)}</>;
 };
