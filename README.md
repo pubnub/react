@@ -1,428 +1,314 @@
-# PubNub React
+# PubNub React Framework v2.0
 
----
+Welcome to the new PubNub React framework!
+This README provides a brief overview of the new framework; it assumes you're familiar with React, and with PubNub.
+The [PubNub website](https://www.pubnub.com/) has many [tutorials](https://www.pubnub.com/blog/category/build/) and [demos](https://www.pubnub.com/developers/demos/), in addition to [SDK documentation](https://www.pubnub.com/docs/) and [REST API documentation](https://www.pubnub.com/docs/pubnub-rest-api-documentation).
 
-**Beta Version Available**
+## Contents
 
-A **beta release** of the PubNub React framework, version 2.0 is now available.
-You can access it in the [v2.0 branch](https://github.com/pubnub/react/tree/v2.0) of this repository.
+- [Quick start](#quick-start)
+- [Requirements](#requirements)
+- [Usage](#usage)
+  - [PubNubProvider](#pubnubprovider)
+  - [PubNubConsumer](#pubnubconsumer)
+  - [usePubNub hook](#usepubnub-hook)
+- [React Native](#react-native)
 
----
+## Quick start
 
-Welcome! We're here to get you started quickly with your integration between PubNub and React\React Native.
-PubNub makes it easy to integrate real-time bidirectional communication into your app.
+**To get started right away**, do the following:
 
-**Pubnub React** is a wrapper of **PubNub JavaScript SDK** [version 4](https://www.pubnub.com/docs/javascript/pubnub-javascript-sdk-v4)
-that adds a few of extra features to simplify the integration with React\React Native:
+1. Set up your React project.
 
-You can still use the native PubNub JavaScript SDK if you feel this will be more suitable for your situation.
+   For a quick single-page app, [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) is a good starting point:
 
-## Communication
-
-- If you **need help** or have a **general question**, contact <support@pubnub.com>
-- If you **want to contribute**, please open a pull request against the `develop` branch.
-
-## Install PubNub React SDK
-
-```shell
-npm install pubnub-react
+```bash
+npx create-react-app hello-pubnub-react
 ```
 
-## Hello World Example
+2. Add the PubNub JavaScript SDK and React framework packages to your project:
 
+```bash
+npm install pubnub
+npm install pubnub-react@rc
 ```
-import React, { Component } from 'react';
-import PubNubReact from 'pubnub-react';
 
-export default class extends Component {
-  constructor(props) {
-    super(props);
-    this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
-    this.pubnub.init(this);
-  }
-  
-  componentWillMount() {
-    this.pubnub.subscribe({ channels: ['channel1'], withPresence: true });
-    
-    this.pubnub.getMessage('channel1', (msg) => {
-      console.log(msg);
+3. Replace the contents of `src/App.js` with the following:
+
+```javascript
+import React, { useCallback, useEffect, useState } from 'react';
+import PubNub from 'pubnub';
+import { PubNubProvider, usePubNub } from 'pubnub-react';
+import './App.css';
+
+const pubnub = new PubNub({
+  publishKey: 'demo',
+  subscribeKey: 'demo',
+});
+
+const channels = ['awesomeChannel'];
+
+const Chat = () => {
+  const pubnub = usePubNub();
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+
+  useEffect(() => {
+    pubnub.addListener({
+      message: messageEvent => {
+        setMessages([...messages, messageEvent.message]);
+      },
     });
-    
-    this.pubnub.getStatus((st) => {
-      console.log(st);
-      this.pubnub.publish({ message: 'hello world from react', channel: 'channel1' });
-    });
-  }
-  
-  componentWillUnmount() {
-    this.pubnub.unsubscribe({ channels: ['channel1'] });
-  }
-  
-  render() {
-    ...
-  }
-}
-```
 
-## How to use PubNubReact
+    pubnub.subscribe({ channels });
+  }, [messages]);
 
-In order to get the integration between your React's Component and PubNub, PubNubReact will be the way to get this without 
-any kind of difficulty or extra job when you need render data in your UI.
+  const sendMessage = useCallback(
+    async message => {
+      await pubnub.publish({
+        channel: channels[0],
+        message,
+      });
 
-- An instance of **PubNubReact** can be associated to only a Component.
-- Create and initialize your **PubNubReact** from the constructor.
-- If you want to subscribe a channel automatically as soon as the component will be displayed on the screen, you will have to 
-  subscribe it from the mounting point with the usage of `componentWillMount()` provided by React.
-- SDK will have created three states which are handled by the instance directly and these are **pn_messages**, **pn_presence** and 
-  **pn_status** please only use them in reading mode if you want to use them for any reason. In addition the trigger events will 
-  give you some extra features to manage the data allocated in theses states.
+      setInput('');
+    },
+    [pubnub, setInput]
+  );
 
-```
-import PubNubReact from 'pubnub-react';
-```
-
-```
-constructor(props) {
-  super(props);
-  this.pubnub = new PubNubReact({ publishKey: 'YOUR PUBLISH KEY', subscribeKey: 'YOUR SUBSCRIBE KEY' });
-  this.pubnub.init(this);
-}
-```
-
-```
-componentWillMount() {
-  this.pubnub.subscribe({
-    channels: ['channel1']
-  });
-   
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  });
-}
-```
-
-## Trigger Events
-
-With the trigger events you can find a way to get real time apps with PubNub React very fast because it will be resolved 
-the synchronization between the data received and the user interface through of updating of the states, invoking the render 
-of the React's Component.
-
-The trigger events are methods which encapsulate the events (message, presence and status) with extra functionality to offer 
-integration and get the process of development faster because will be resolved different scenarios which you can find when 
-you are working with React\React Native.
-
-To execute the trigger events you have to execute first the method `init`, in this way `getMessage`, `getPresence` and 
-`getStatus` will be available; these trigger events have the responsibility to register a channel or a channelGroup 
-in order to capture any real time message as soon as this is received and the Component renders automatically the user interface.
-
-The `getStatus` will only say to the Component that this has to render again if there is an update in the global state of the network.
-
-**Registering a channel to be handled by the trigger event**
-
-```
-...
-
-componentWillMount() {  
-  this.pubnub.getStatus();
-  
-  this.pubnub.getMessage('channel1');
-  this.pubnub.getMessage('channel2');
-  this.pubnub.getMessage('channelGroup1');
-  
-  this.pubnub.getPresence('channel1');
-  this.pubnub.getPresence('channel2');
-  
-  ...
-}
-
-...
-```
-
-### getMessage
-
-**Rendering real time messages from React**
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1');
-  
-  ...
-}
-
-render() {
-  const messages = this.pubnub.getMessage('channel1');
   return (
-    <div>
-      <ul>
-        {messages.map((m, index) => <li key={'message' + index}>{m.message}</li>)}
-      </ul>
+    <div className="App">
+      <header className="App-header">
+        <div
+          style={{
+            width: '500px',
+            height: '300px',
+            border: '1px solid black',
+          }}
+        >
+          <div style={{ backgroundColor: 'grey' }}>React Chat Example</div>
+          <div
+            style={{
+              backgroundColor: 'white',
+              height: '260px',
+              overflow: 'scroll',
+            }}
+          >
+            {messages.map((message, messageIndex) => {
+              return (
+                <div
+                  key={`message-${messageIndex}`}
+                  style={{
+                    display: 'inline-block',
+                    float: 'left',
+                    backgroundColor: '#eee',
+                    color: 'black',
+                    borderRadius: '20px',
+                    margin: '5px',
+                    padding: '8px 15px',
+                  }}
+                >
+                  {message}
+                </div>
+              );
+            })}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              height: '40px',
+              backgroundColor: 'lightgrey',
+            }}
+          >
+            <input
+              type="text"
+              style={{
+                borderRadius: '5px',
+                flexGrow: 1,
+                fontSize: '18px',
+              }}
+              placeholder="Type your message"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+            />
+            <button
+              style={{
+                backgroundColor: 'blue',
+                color: 'white',
+                borderRadius: '5px',
+                fontSize: '16px',
+              }}
+              onClick={e => {
+                e.preventDefault();
+                sendMessage(input);
+              }}
+            >
+              Send Message
+            </button>
+          </div>
+        </div>
+      </header>
     </div>
   );
-}
+};
 
-...
-```
-
-**Rendering real time messages from React Native**
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1');
-  
-  ...
-}
-
-render() {
-  const messages = this.pubnub.getMessage('channel1');
+const App = () => {
   return (
-    <View>
-      {messages.map((m) => <Text>{m.message}</Text>)}
-    </View>
+    <PubNubProvider client={pubnub}>
+      <Chat />
+    </PubNubProvider>
   );
-}
+};
 
-...
+export default App;
 ```
 
-In addition to be used to register channels or channelGroups you can also catch each message if you want to give it some kind
-of procedure.
+4. In your project, run the following command:
 
-```
-...
-
-componentWillMount() {
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  });
-  
-  ...
-}
-
-...
+```bash
+npm start
 ```
 
-When you are using `getMessage` this is going to keep the latest 100 messages received by default. But you can change this
-value when you attach the channel for first time with `getMesage`.
+You should see the following in your browser:
+![chat UI screenshot][qs-screenshot]
 
-```
-...
+## Requirements
 
-// the stack for the channel1 will always have the latest 20 messages.
-componentWillMount() {
-  this.pubnub.getMessage('channel1', (msg) => {
-    console.log(msg);
-  }, 20);
-  
-  ...
-}
+To use the PubNub React framework, you need:
 
-...
-```
-or
+- React 16.8 or above,
+- PubNub [Javascript SDK](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk).
 
-```
-...
+## Usage
 
-// the stack for the channel1 will always have the latest 20 messages.
-componentWillMount() {
-  this.pubnub.getMessage('channel1', 20);
-  
-  ...
-}
+### PubNubProvider
 
-...
-```
+The PubNubProvider makes available a PubNub client instance to a React component tree. You instantiate the provider as follows (note that this example assumes that your publish and subscribe keys are contained in the `pubnub.config.json` file):
 
-### getPresence
+```js
+import PubNub from 'pubnub';
+import { PubNubProvider } from 'pubnub-react';
 
-**Rendering presence object from react**
+const pubNubConfig = require('./pubnub.config.json');
+const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
 
-```
-...
-
-componentWillMount() {
-  this.pubnub.getPresence('channel1', (presence) => {
-    console.log(presence);
-  });
-  
-  ...
-}
-
-render() {
-  const presence = this.pubnub.getPresence('channel1');
+const App = () => {
   return (
-    <div>
-      <p>{presence.action}</p>
-    </div>
+    <PubNubProvider client={pubNubClient}>
+      <MyRootComponent />
+    </PubNubProvider>
   );
-}
+};
 
-...
+export default App;
 ```
 
-**Rendering presence object from React Native**
+#### PubNubProvider props
 
-```
-...
+The PubNubProvider component takes a single prop:
 
-componentWillMount() {
-  this.pubnub.getPresence('channel1', (presence) => {
-    console.log(presence);
-  });
-  
-  ...
-}
+- **client** is the required pubNubClient instance. This is used by all components that require PubNub functionality.
 
-render() {
-  const presence = this.pubnub.getPresence('channel1');
-  return (
-    <View>
-       <Text>{presence.action}</Text>
-    </View>
-  );
-}
+### usePubNub hook
 
-...
-```
+The PubNub hook lets you interact with PubNub in function components.
 
-**Rendering the global status from React**
+Hooks are a new feature added in React 16.8 that allow you to use React features without writing a class. For a general overview of hooks, refer to [the React documentation](https://reactjs.org/docs/hooks-intro.html).
 
-```
-...
+> **Note**: As you might expect, the `usePubNub` hook requires cleanup. For more information on the cleanup concept, refer to [the React documentation](https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup).
 
-componentWillMount() {
-  this.pubnub.getStatus((status) => {
-    console.log(status);
-  });
-  
-  ...
-}
-
-render() {
-  const status = this.pubnub.getStatus();
-  return (
-    <div>
-      <p>{status.category}</p>
-    </div>
-  );
-}
-
-...
-```
-
-**Rendering the global status from React Native**
-
-```
-...
-
-componentWillMount() {
-  this.pubnub.getStatus((status) => {
-    console.log(status);
-  });
-  
-  ...
-}
-
-render() {
-  const status = this.pubnub.getStatus();
-  return (
-    <View>
-       <Text>{status.category}</Text>
-    </View>
-  );
-}
-
-...
-```
-
-## Cleaning and releasing
-
-You can execute clean to remove all message cached in the state of the Component by the instance in run time without 
-affecting the capture of new incoming messages for the trigger events.
-
-```
-this.pubnub.clean('myChannel1');
-```
-
-```
-this.pubnub.clean('myGroup1');
-```
-
-You can execute release if you want to remove all message cached and stop of capturing new incoming messages for the
-trigger events.
-
-```
-this.pubnub.release('myChannel1');
-```
-
-```
-this.pubnub.release('myGroup1');
-```
-
-```
-this.pubnub.release(['myChannel1', 'myChannel2']);
-```
-
-## Accessing Methods
-
-All methods of the Native Javascript SDKs are wrapped within the PubNubReact SDK. To learn more about PubNub JavaScript 
-features and methods available please refer to the API Reference of the Javascript SDK, here some examples:
-
-* [JavaScript V4 API Reference](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4)
-
-**Publish a message**
-
-```
-this.pubnub.publish({channel: 'myChannel', message: 'Hello!'}, (response) => {
-  console.log(response);
-});
-```
-
-**Subscribe a channel**
-
-To get that `presence` event works, do not forget to add ```withPresence: true```
+#### Example `usePubNub` hook usage
 
 ```javascript
-this.pubnub.subscribe({
-    channels  : ['channel1', 'channel2', 'channel3'],
-    channelGroups: ['channelGroup1', 'channelGroup2'],
-    withPresence: true
-});
+import React, { useState, useEffect } from 'react';
+import { usePubNub } from '../../src/index';
+
+const PubNubTime = () => {
+  const client = usePubNub();
+  const [time, setTime] = useState(null);
+  const [error, setError] = useState(error);
+
+  useEffect(() => {
+    client
+      .time()
+      .then(({ timetoken }) => {
+        setTime(timetoken);
+      })
+      .catch(error => {
+        setError(error);
+      });
+  }, []);
+
+  if (error !== null) {
+    return <div>An error has occured: {error.message}</div>;
+  }
+
+  if (time === null) {
+    return <div>Loading...</div>;
+  }
+
+  return <div>Current time: {time}</div>;
+};
+
+export default PubNubTime;
 ```
 
-**Unsubscribe a channel**
+Then, to load `PubNubTime` on-demand, you could use `React.Lazy` and `Suspense`:
 
 ```javascript
-this.pubnub.unsubscribe('channel1');
+import React, { Suspense, lazy } from 'react';
+
+const MyRootComponent = () => {
+  const DisplayPubNubTime = lazy(() => import('./PubNubTime'));
+
+  return (
+    <Suspense fallback={<div>Loading. . .</div>}>
+      <DisplayPubNubTime />
+    </Suspense>
+  );
+};
+
+export default MyRootComponent;
 ```
 
-### Channels with history
+### PubNubConsumer
 
-You can retrieve published messages from archival storage for this requires that [Storage and Playback](http://www.pubnub.com/knowledge-base/discussion/644/how-do-i-enable-add-on-features-for-my-keys) add-on is enabled
-for your keys. In order to get more information about this feature - see [History](https://www.pubnub.com/docs/javascript/api-reference-sdk-v4#history).
+The PubNubConsumer allows you to access the client instance you made available with a PubNubProvider.
 
-```javascript
-this.pubnub.history({ channel: 'myChannel1' }).then((response) => {
-  console.log(response);
-});
+> **Note**: Be careful, as the children function will be called every time component rerenders. Wrap components using PubNubConsumer using `React.memo` to prevent this behaviour.
+
+#### PubNubConsumer props
+
+The PubNubConsumer component takes a single prop:
+
+- **client** is the required PubNub Client instance. This is used by all components that require PubNub functionality.
+
+#### Example PubNubConsumer usage
+
+Once you've created a PubNubProvider, you can access the client with a PubNubConsumer.
+
+```js
+import React from 'react';
+import PubNub from 'pubnub';
+import { PubNubProvider } from '../PubNubProvider';
+import { PubNubConsumer } from '../PubNubConsumer';
+import { getPubNubContext } from '../PubNubContext';
+
+const pubNubConfig = require('../config/pubnub.json');
+const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
+
+const App = () => {
+  return (
+    <PubNubProvider client={pubNubClient}>
+      <PubNubConsumer>
+        {client => 'success!' /* do something now */}
+      </PubNubConsumer>
+    </PubNubProvider>
+  );
+};
 ```
 
-**Retriving the history from ```getMessage``` method:**
+## React Native
 
-At the moment that you are subscribing a channel you can pass the optional parameter ```autoload``` this value has to
-contain a value from 1 to 100 in order to retrieve the last messages published in the channel. When the ```getMessage```
-is called this going to retrieve the history.
+This library is compatible with latest versions of React Native framework. For an example usage please refer to the [examples/reactnative](/examples/reactnative).
 
-```
-this.pubnub.subscribe({channels: ['myChannel1'], triggerEvents: true, withPresence: true, autoload: 100});
-```
-
-Also you can use a callback to know when the retrieving process has finished.
-
-```
-let messages = this.pubnub.getMessage('myChannel1', () => {
-  console.log(messages);
-});
-```
+[qs-screenshot]: ./assets/quickstart-screenshot.png

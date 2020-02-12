@@ -1,11 +1,13 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Node template
-# Logs
-logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# No mac stuff
+.DS_Store
+
+# No vscode stuff
+.vscode
 
 # No bundled stuff in git
 dist
@@ -13,6 +15,7 @@ lib
 
 # No rollup stuff
 .rts2_cache*
+.cache
 
 # Runtime data
 pids

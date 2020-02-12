@@ -1,15 +1,23 @@
 {
   "name": "pubnub-react",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "Publish & Subscribe Real-time Messaging with PubNub",
   "author": "PubNub <support@pubnub.com>",
-  "scripts": {
-    "test": "gulp test"
-  },
-  "main": "./lib/pubnub-react.js",
+  "main": "dist/index.js",
+  "module": "dist/pubnub-react.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pubnub/react.git"
+    "url": "git://github.com/pubnub/react.git"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --env=jsdom",
+    "lint": "tsdx lint"
   },
   "keywords": [
     "cloud",
@@ -23,56 +31,44 @@
     "messaging"
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pubnub/react/issues"
+  "peerDependencies": {
+    "@types/pubnub": "^4.25.1",
+    "pubnub": "^4.27.3"
   },
-  "homepage": "https://github.com/pubnub/react#readme",
-  "dependencies": {
-    "immutability-helper": "^2.2.0",
-    "pubnub": "^4.24.2"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^6.2.10",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-class-properties": "^6.19.0",
-    "babel-plugin-transform-flow-strip-types": "^6.21.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-register": "^6.18.0",
-    "babelify": "^7.3.0",
-    "browserify": "^14.4.0",
-    "chai": "^4.0.2",
-    "enzyme": "^2.8.2",
-    "eslint": "^3.13.1",
-    "eslint-config-pubnub": "^2.0.0",
-    "eslint-plugin-flowtype": "^2.34.0",
-    "eslint-plugin-mocha": "^4.9.0",
-    "eslint-plugin-react": "^7.13.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-clean": "^0.3.2",
-    "gulp-eslint": "^3.0.1",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-mocha": "^3.0.1",
-    "gulp-open": "^2.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.5.0",
-    "gulp-uglify": "^3.0.0",
-    "imports-loader": "^0.7.0",
-    "isparta": "^4.0.0",
-    "js-yaml": "^3.7.0",
-    "jsdom": "^7.0.2",
-    "json-loader": "^0.5.4",
-    "mocha": "^3.2.0",
-    "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
-    "react-dom": "^15.5.4",
-    "run-sequence": "^1.2.2",
-    "stats-webpack-plugin": "^0.6.1",
-    "webpack-stream": "^3.2.0"
+    "@rollup/plugin-replace": "^2.3.0",
+    "@testing-library/react": "^9.1.3",
+    "@types/jest": "^24.0.18",
+    "@types/pubnub": "^4.25.1",
+    "@types/react": "^16.8.25",
+    "@types/react-dom": "^16.8.5",
+    "husky": "^3.0.2",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "pubnub": "^4.25.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "tsdx": "^0.9.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "ts-invariant": "^0.4.4"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/**/*.(spec|test).{ts,tsx}"
+    ]
   }
 }
