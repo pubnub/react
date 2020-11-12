@@ -263,7 +263,7 @@ The PubNub hook lets you interact with PubNub in function components.
 
 Hooks are a new feature added in React 16.8 that allow you to use React features without writing a class. For a general overview of hooks, refer to [the React documentation](https://reactjs.org/docs/hooks-intro.html).
 
-> **Note**: As you might expect, the `usePubNub` hook requires cleanup. For more information on the cleanup concept, refer to [the React documentation](https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup).
+**Note**: As you might expect, the `usePubNub` hook requires cleanup. For more information on the cleanup concept, refer to [the React documentation](https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup).
 
 #### Example `usePubNub` hook usage
 
@@ -358,4 +358,4 @@ const App = () => {
 
 ## Support
 
-If you **need help** or have a **general question**, contact <support@pubnub.com>.
+If you **need help** or have a **general question**, contact support@pubnub.com.
