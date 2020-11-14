@@ -174,6 +174,8 @@ Follow these instructions to set up a simple chat app using PubNub.
     You should see the following in your browser:
     ![chat UI screenshot](./assets/quickstart-screenshot.png)
 
+**Note**: This app sends messages as simple strings (for example, `"hello, world"`), and _not_ as JSON objects (for example, `{"message": "hello, world"}`). If you're using the [Debug Console](https://www.pubnub.com/docs/console) as a second client, you'll need to change the default message format.
+
 ### Add listeners
 
 In the code in the previous section, the following adds a message listener in the `PubNubConsumer`:
