@@ -1,3 +1,10 @@
+## [v2.1.0](https://github.com/pubnub/react/releases/tag/v2.1.0)
+December 21 2020
+
+[Full Changelog](https://github.com/pubnub/react/compare/v2.0.0...v2.1.0)
+
+- ⭐️️ Update quickstart examples. 
+
 ## [v2.0.0-beta.2](https://github.com/pubnub/react/tree/v2.0)
 
 September-09-2019

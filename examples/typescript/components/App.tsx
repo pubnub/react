@@ -1,17 +1,18 @@
-import React from 'react';
-import MyRootComponent from './MyRootComponent';
+import React, { useState } from 'react';
 import PubNub from 'pubnub';
-import { PubNubProvider } from '../../src/index';
+import { PubNubProvider, PubNubConsumer } from '../../../src/index';
+import Chat from './Chat';
+import MyRootComponent from './MyRootComponent';
 
 const pubNubConfig = require('../config/pubnub.json');
 const pubNubClient = new PubNub(pubNubConfig.Demo.keySet);
 
-const App = () => {
+function App() {
   return (
     <PubNubProvider client={pubNubClient}>
-      <MyRootComponent />
+      <Chat />
     </PubNubProvider>
   );
-};
+}
 
 export default App;

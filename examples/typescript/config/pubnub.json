@@ -1,8 +1,8 @@
 {
   "Demo": {
     "keySet": {
-      "publishKey": "pub-c-a593bcdf-d9c1-4c36-9182-9c677b39bc36",
-      "subscribeKey": "sub-c-7f61bda2-b8ed-11e9-a581-ba8cef5fd74e"
+      "publishKey": "",
+      "subscribeKey": ""
     }
   }
 }

@@ -1,5 +1,12 @@
 ---
 changelog:
+  -
+    changes:
+      -
+        text: "Update quickstart examples."
+        type: improvement
+    date: 2020-12-21
+    version: v2.1.0
   - changes:
       - text: 'second public version'
         type: feature
@@ -10,4 +17,4 @@ files:
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: 'v2.0.0-beta.1'
+version: 'v2.1.0'

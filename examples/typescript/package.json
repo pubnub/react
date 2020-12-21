@@ -13,9 +13,9 @@
     "ts-invariant": "^0.4.4"
   },
   "alias": {
-    "react": "../node_modules/react",
-    "react-dom": "../node_modules/react-dom/profiling",
-    "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
+    "react": "../../node_modules/react",
+    "react-dom": "../../node_modules/react-dom/profiling",
+    "scheduler/tracing": "../../node_modules/scheduler/tracing-profiling"
   },
   "devDependencies": {
     "@types/react": "^16.8.15",

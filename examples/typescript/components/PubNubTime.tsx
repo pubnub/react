@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { usePubNub } from '../../src/index';
+import { usePubNub } from '../../../src/index';
 
 const PubNubTime = () => {
   const pubnub = usePubNub();

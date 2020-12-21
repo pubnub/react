@@ -1,14 +1,26 @@
 language: node_js
-sudo: false
-node_js:
-  - 'stable'
+dist: xenial
+os: linux
+node_js: stable
+
 env:
-  - CXX=g++-4.8
+  jobs:
+    - CXX=g++-4.8
+
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-script:
-  - npm test
+
+stages:
+  - name: 'test'
+    if: |
+      tag IS blank
+
+jobs:
+  include:
+    - stage: 'test'
+      name: 'NodeJS "stable"'
+      script: npm test
