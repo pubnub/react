@@ -23,7 +23,7 @@ export const PubNubProvider: React.FC<PubNubProviderProps<PubNub>> = ({
   }, [client]);
 
   if (!contextValue.client) {
-    console.error(
+    throw new Error(
       'PubNubProvider was not passed a client instance. Make ' +
         'sure you pass in your client via the "client" prop.'
     );

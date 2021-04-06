@@ -7,7 +7,7 @@ export function usePubNub(): PubNub {
   const context = useContext(PubNubContext);
 
   if (!context || !context.client) {
-    console.error(
+    throw new Error(
       'No PubNub Client instance can be found. Please ensure that you ' +
         'have called `PubNubProvider` higher up in your tree.'
     );
