@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "pubnub": "^4.25.0",
-    "react-app-polyfill": "^1.0.0",
-    "ts-invariant": "^0.4.4"
+    "react-app-polyfill": "^1.0.0"
   },
   "alias": {
     "react": "../../node_modules/react",

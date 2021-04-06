@@ -1,7 +1,5 @@
 import React from 'react';
 import PubNub from 'pubnub';
-import invariant from 'ts-invariant';
-
 import { PubNubContext } from './PubNubContext';
 
 export interface PubNubConsumerProps {
@@ -11,11 +9,12 @@ export interface PubNubConsumerProps {
 export const PubNubConsumer: React.FC<PubNubConsumerProps> = ({ children }) => {
   const context = React.useContext(PubNubContext);
 
-  invariant(
-    context && context.client,
-    'Could not find "client" in the context of PubNubConsumer. ' +
-      'Wrap the root component in an <PubNubProvider>.'
-  );
+  if (!context || !context.client) {
+    throw new Error(
+      'Could not find "client" in the context of PubNubConsumer. ' +
+        'Wrap the root component in an <PubNubProvider>.'
+    );
+  }
 
   return <>{children(context!.client)}</>;
 };
