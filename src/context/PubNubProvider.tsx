@@ -1,6 +1,5 @@
 import React from 'react';
 import PubNub from 'pubnub';
-import invariant from 'ts-invariant';
 
 import { PubNubContext } from './PubNubContext';
 
@@ -23,11 +22,12 @@ export const PubNubProvider: React.FC<PubNubProviderProps<PubNub>> = ({
     return { client };
   }, [client]);
 
-  invariant(
-    contextValue.client,
-    'PubNubProvider was not passed a client instance. Make ' +
-      'sure you pass in your client via the "client" prop.'
-  );
+  if (!contextValue.client) {
+    console.error(
+      'PubNubProvider was not passed a client instance. Make ' +
+        'sure you pass in your client via the "client" prop.'
+    );
+  }
 
   React.useEffect(() => {
     appendPnsdk(contextValue.client);
