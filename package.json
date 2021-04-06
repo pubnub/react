@@ -64,7 +64,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "ts-invariant": "^0.4.4"
+    "ts-invariant": "^0.7.3"
   },
   "jest": {
     "testMatch": [
