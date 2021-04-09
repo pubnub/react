@@ -1,34 +1,36 @@
-# PubNub React Framework
+# PubNub React SDK
 
-This is the official PubNub React framework repository.
+This is the official PubNub React SDK repository.
 
 PubNub takes care of the infrastructure and APIs needed for the realtime communication layer of your application. Work on your app's logic and let PubNub handle sending and receiving data across the world in less than 100ms.
 
-* [Requirements](#requirements)
-* [Get keys](#get-keys)
-* [Sample app](#sample-app)
 * [Documentation links](#documentation-links)
+* [Requirements](#requirements)
+* [Sample app](#sample-app)
 * [Reference information](#reference-information)
 * [Support](#support)
 
+## Documentation Links
+
+* [PubNub React SDK Documentation](https://www.pubnub.com/docs/chat/react/setup)
+* [JavaScript SDK Documentation](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk)
+* [PubNub React Chat Components](https://github.com/pubnub/react-chat-components)
+
 ## Requirements
 
-To use the PubNub React framework, you need:
+To use the PubNub React SDK, you need:
 
 * React 16.8 or above
 * PubNub [Javascript SDK](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk).
 
 > This library is compatible with the latest versions of the React Native framework. For examples, refer to [examples/reactnative](/examples/reactnative).
 
-## Get keys
-
-You will need publish and subscribe keys to authenticate your app. Get your keys from the [Admin Portal](https://dashboard.pubnub.com/).
-
-## Sample app
+## Sample App
 
 Follow these instructions to set up a simple chat app using PubNub.
 
 **Note**: These instructions assume you're using JavaScript. If you'd prefer to use TypeScript, follow the instructions in the [React framework documentation](https://www.pubnub.com/docs/chat/react/getting-started).
+1. You will need publish and subscribe keys to authenticate your app. Get your keys from the [Admin Portal](https://dashboard.pubnub.com/).
 
 1. Set up your React project.
 
@@ -201,55 +203,8 @@ Follow these instructions to set up a simple chat app using PubNub.
     You should see the following in your browser:
     ![chat UI screenshot](./assets/quickstart-screenshot.png)
 
-### Add listeners
 
-In the code in the previous section, the following adds a message listener in the `Chat()` function:
-
-```javascript
-      useEffect(() => {
-        pubnub.addListener({ message: handleMessage });
-        pubnub.subscribe({ channels });
-      }, [pubnub, channels]);
-```
-
-### Publish and subscribe
-
-Publishing a message:
-
-```javascript
-const [channels] = useState(['awesome-channel']);
-
-// ...
-
-const sendMessage = message => {
-  if (message) {
-    pubnub
-      .publish({ channel: channels[0], message })
-      .then(() => setMessage(''));
-  }
-};
-```
-
-Subscribing to a channel:
-
-```javascript
-const [channels] = useState(['awesome-channel']);
-
-// ...
-
-useEffect(() => {
-  pubnub.addListener({ message: handleMessage });
-  pubnub.subscribe({ channels });
-}, [pubnub, channels]);
-```
-
-## Documentation links
-
-* [React framework documentation](https://www.pubnub.com/docs/chat/react/setup)
-* [JavaScript SDK documentation](https://www.pubnub.com/docs/web-javascript/pubnub-javascript-sdk)
-* [PubNub React/Redux team chat app](https://pubnub.github.io/typescript-ref-app-team-chat/docs/introduction)
-
-## Reference information
+## Reference Information
 
 * [PubNubConsumer](#pubnubconsumer)
 * [PubNubProvider](#pubnubprovider)
