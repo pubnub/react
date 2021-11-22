@@ -1,0 +1,14 @@
+name: React app build validation
+
+on: [push]
+
+jobs:
+  build:
+    name: Validate app build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies and build app
+        run: |
+          npm install
+          npm run build
