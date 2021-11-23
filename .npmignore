@@ -20,3 +20,8 @@ test
 # No build specifics needed
 .pubnub.yml
 .travis.yml
+
+
+.github
+release-artifacts-*
+examples/*

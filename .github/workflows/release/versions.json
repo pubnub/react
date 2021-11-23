@@ -1,0 +1,16 @@
+{
+  ".pubnub.yml": [
+    {
+      "pattern": "^version: '(v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)'$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ],
+  "package.json": [
+    {
+      "pattern": "^\\s{2,}\"version\": \"(v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)\",$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ]
+}
