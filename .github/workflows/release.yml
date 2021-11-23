@@ -49,10 +49,11 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           npm-token: ${{ secrets.NPM_TOKEN }}
           check-ownership: false
+          build-command: 'npm run build'
+          build-path: dist
       - name: Create Release
         uses: ./.github/.release/actions/actions/services/github-release
         with:
           token: ${{ secrets.GH_TOKEN }}
-          artifacts-folder: upload/normal/
           jira-api-key: ${{ secrets.JIRA_API_KEY }}
           last-service: true
