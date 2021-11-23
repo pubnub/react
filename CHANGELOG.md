@@ -1,3 +1,12 @@
+## v2.1.1
+November 23 2021
+
+#### Fixed
+- Broken pnsdk parameter used for telemetry.
+
+#### Modified
+- Pubnub.yml was updated with artifacts, platforms and dependencies.
+
 ## [v2.1.0](https://github.com/pubnub/react/releases/tag/v2.1.0)
 December 21 2020
 

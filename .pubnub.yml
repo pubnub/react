@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2021-11-23
+    version: v2.1.1
+    changes:
+      - type: bug
+        text: "Broken pnsdk parameter used for telemetry."
+      - type: improvement
+        text: "Pubnub.yml was updated with artifacts, platforms and dependencies."
   -
     changes:
       -
@@ -17,7 +24,7 @@ files:
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: 'v2.1.0'
+version: '2.1.1'
 sdks:
   -
     full-name: PubNub React SDK
