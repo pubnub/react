@@ -11,7 +11,7 @@ export interface PubNubProviderProps<PubNubInstance> {
 
 function appendPnsdk(pubnub: any) {
   if (typeof pubnub._addPnsdkSuffix === 'function') {
-    pubnub._addPnsdkSuffix('React/__VERSION__');
+    pubnub._addPnsdkSuffix('react', 'React/__VERSION__');
   }
 }
 
