@@ -1,0 +1,23 @@
+name: Tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Integration and Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Setup NodeJS 17.5.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17.5.0
+      - name: Build and run tests for NodeJS 17.5.0
+        run: |
+          npm ci
+          npm test
