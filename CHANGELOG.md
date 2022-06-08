@@ -1,3 +1,9 @@
+## v3.0.0
+June 08 2022
+
+#### Added
+- BREAKING CHANGES: Upgrade the underlying SDK to JavaScript v7.
+
 ## v2.1.1
 November 23 2021
 
