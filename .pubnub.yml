@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2022-06-08
+    version: v3.0.0
+    changes:
+      - type: feature
+        text: "BREAKING CHANGES: Upgrade the underlying SDK to JavaScript v7."
   - date: 2021-11-23
     version: v2.1.1
     changes:
@@ -24,7 +29,7 @@ files:
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: '2.1.1'
+version: '3.0.0'
 sdks:
   -
     full-name: PubNub React SDK
