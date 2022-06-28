@@ -6,7 +6,8 @@ import { PubNubProvider } from 'pubnub-react'
 
 const pubnub = new PubNub({
     subscribeKey: 'demo',
-    publishKey: 'demo'
+    publishKey: 'demo',
+    uuid: 'myuuid'
 })
 
 export const Application = () => (
