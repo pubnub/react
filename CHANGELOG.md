@@ -1,3 +1,9 @@
+## v3.0.1
+June 28 2022
+
+#### Added
+- Mark package as side-effect free to enable tree shaking.
+
 ## v3.0.0
 June 08 2022
 
