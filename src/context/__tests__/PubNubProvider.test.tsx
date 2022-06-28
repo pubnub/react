@@ -11,6 +11,7 @@ describe('<PubNubProvider /> component', () => {
   const pubNubClient = new PubNub({
     publishKey: 'x',
     subscribeKey: 'y',
+    uuid: 'z',
   });
 
   it('has an error when PubNubProvider was not passed a client instance', () => {
