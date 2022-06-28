@@ -1,11 +1,12 @@
 {
   "name": "pubnub-react",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Publish & Subscribe Real-time Messaging with PubNub",
   "author": "PubNub <support@pubnub.com>",
   "main": "dist/index.js",
   "module": "dist/pubnub-react.esm.js",
   "typings": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
