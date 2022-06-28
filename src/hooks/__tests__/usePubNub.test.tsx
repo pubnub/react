@@ -11,6 +11,7 @@ describe('usePubNub hook', () => {
   const pubNubClient = new PubNub({
     publishKey: 'x',
     subscribeKey: 'y',
+    uuid: 'z',
   });
 
   it('should have client instance provided', () => {
