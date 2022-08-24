@@ -1,5 +1,10 @@
 # React Native PubNub example
 
+**Additional getting started resources:**
+* The [React Native Tutorial](https://pubnub.com/tutorials/getting-started-chat-sdk-react-native/) and accompanying [sample app](https://github.com/PubNubDevelopers/)
+
+-------------------
+
 ## Prerequisites
 
 You need to have a React Native development environment set up using the guides in [React Native documentation](https://facebook.github.io/react-native/docs/getting-started) (React Native CLI Quickstart tab).
