@@ -10,27 +10,20 @@
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
     },
     "dependencies": {
-        "pubnub": "^7.0.0",
-        "pubnub-react": "^3.0.0",
-        "react": "16.9.0",
-        "react-native": "0.61.5"
+        "pubnub": "^7.2.0",
+        "pubnub-react": "^3.0.1",
+        "react": "18.0.0",
+        "react-native": "0.69.4"
     },
     "devDependencies": {
-        "@babel/core": "^7.6.2",
-        "@babel/runtime": "^7.6.2",
-        "@react-native-community/eslint-config": "^0.0.5",
-        "@types/jest": "^24.0.24",
-        "@types/pubnub": "^7.0.0",
-        "@types/react-native": "^0.60.25",
-        "@types/react-test-renderer": "16.9.1",
-        "@typescript-eslint/eslint-plugin": "^2.12.0",
-        "@typescript-eslint/parser": "^2.12.0",
-        "babel-jest": "^24.9.0",
-        "eslint": "^6.5.1",
-        "jest": "^24.9.0",
-        "metro-react-native-babel-preset": "^0.56.0",
-        "prettier": "^1.19.1",
-        "react-test-renderer": "16.9.0",
+        "@babel/core": "^7.12.9",
+        "@babel/runtime": "^7.12.5",
+        "@react-native-community/eslint-config": "^2.0.0",
+        "babel-jest": "^26.6.3",
+        "eslint": "^7.32.0",
+        "jest": "^26.6.3",
+        "metro-react-native-babel-preset": "^0.70.3",
+        "react-test-renderer": "18.0.0",
         "typescript": "^3.7.3"
     },
     "jest": {
