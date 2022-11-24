@@ -65,7 +65,7 @@
     "typescript": "^3.8.0"
   },
   "dependencies": {
-    "ts-invariant": "^0.4.4"
+    "ts-invariant": "^0.10.3"
   },
   "overrides": {
     "jest": "^26.0.0",
