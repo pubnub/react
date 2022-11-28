@@ -1,3 +1,9 @@
+## v3.0.2
+November 28 2022
+
+#### Fixed
+- Fixes issue of having lower version of `ts-invariant`.
+
 ## v3.0.1
 June 28 2022
 
