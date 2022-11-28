@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2022-11-28
+    version: v3.0.2
+    changes:
+      - type: bug
+        text: "Fixes issue of having lower version of `ts-invariant`."
   - date: 2022-06-28
     version: v3.0.1
     changes:
@@ -34,7 +39,7 @@ files:
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: '3.0.1'
+version: '3.0.2'
 sdks:
   -
     full-name: PubNub React SDK
