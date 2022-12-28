@@ -3,6 +3,12 @@ name: Tests
 on:
   push:
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
 
 jobs:
   tests:
@@ -10,14 +16,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+      - name: Checkout actions
+        uses: actions/checkout@v3
+        with:
+          repository: pubnub/client-engineering-deployment-tools
+          ref: v1
+          token: ${{ secrets.GH_TOKEN }}
+          path: .github/.release/actions
       - name: Setup NodeJS 17.5.0
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 17.5.0
       - name: Build and run tests for NodeJS 17.5.0
         run: |
           npm ci
           npm test
+      - name: Cancel workflow runs for commit on error
+        if: failure()
+        uses: ./.github/.release/actions/actions/utils/fast-jobs-failure
