@@ -12,6 +12,7 @@ describe('<PubNubConsumer /> component', () => {
   const pubNubClient = new PubNub({
     publishKey: 'x',
     subscribeKey: 'y',
+    uuid: 'z',
   });
 
   it('has a client instance provided', done => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PubNub from 'pubnub';
-import { PubNubProvider, PubNubConsumer } from '../../../src/index';
+import { PubNubProvider, PubNubConsumer } from 'pubnub-react';
 import Chat from './Chat';
 import MyRootComponent from './MyRootComponent';
 

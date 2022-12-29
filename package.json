@@ -1,11 +1,12 @@
 {
   "name": "pubnub-react",
-  "version": "2.1.1",
+  "version": "3.0.2",
   "description": "Publish & Subscribe Real-time Messaging with PubNub",
   "author": "PubNub <support@pubnub.com>",
   "main": "dist/index.js",
   "module": "dist/pubnub-react.esm.js",
   "typings": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -32,8 +33,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@types/pubnub": "^4.25.1",
-    "pubnub": "^4.27.3"
+    "@types/pubnub": "^7.0.0",
+    "pubnub": "^7.0.1"
   },
   "husky": {
     "hooks": {
@@ -49,22 +50,26 @@
   "devDependencies": {
     "@rollup/plugin-replace": "^2.3.0",
     "@testing-library/react": "^9.1.3",
-    "@types/jest": "^24.0.18",
-    "@types/pubnub": "^4.25.1",
+    "@types/jest": "^26.0.0",
+    "@types/pubnub": "^7.0.0",
     "@types/react": "^16.8.25",
     "@types/react-dom": "^16.8.5",
     "husky": "^3.0.2",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
-    "pubnub": "^4.25.1",
+    "pubnub": "^7.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "tsdx": "^0.9.0",
+    "tsdx": "^0.14.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.8.0"
   },
   "dependencies": {
-    "ts-invariant": "^0.4.4"
+    "ts-invariant": "^0.10.3"
+  },
+  "overrides": {
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0"
   },
   "jest": {
     "testMatch": [

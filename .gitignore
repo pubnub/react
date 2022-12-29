@@ -17,6 +17,9 @@ lib
 .rts2_cache*
 .cache
 
+# No parcel stuff
+.parcel-cache
+
 # Runtime data
 pids
 *.pid
