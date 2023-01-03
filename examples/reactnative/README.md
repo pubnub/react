@@ -1,9 +1,10 @@
 # React Native PubNub example
 
 **Additional getting started resources:**
-* The [React Native Tutorial](https://pubnub.com/tutorials/getting-started-chat-sdk-react-native/) and accompanying [sample app](https://github.com/PubNubDevelopers/)
 
--------------------
+-   The [React Native Tutorial](https://pubnub.com/tutorials/getting-started-chat-sdk-react-native/) and accompanying [sample app](https://github.com/PubNubDevelopers/)
+
+---
 
 ## Prerequisites
 
