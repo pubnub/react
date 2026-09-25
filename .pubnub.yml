@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2026-09-25
+    version: v3.0.3
+    changes:
+      - type: bug
+        text: "Updated the package description and added new keywords for better searchability."
   - date: 2022-11-28
     version: v3.0.2
     changes:
@@ -37,7 +42,7 @@ files:
 name: pubnub-react
 schema: 1
 scm: github.com/pubnub/react
-version: '3.0.2'
+version: '3.0.3'
 sdks:
   - full-name: PubNub React SDK
     short-name: react

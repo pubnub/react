@@ -1,3 +1,9 @@
+## v3.0.3
+September 25 2026
+
+#### Fixed
+- Updated the package description and added new keywords for better searchability.
+
 ## v3.0.2
 
 November 28 2022
